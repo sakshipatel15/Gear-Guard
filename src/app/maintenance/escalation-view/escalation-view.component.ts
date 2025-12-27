@@ -67,7 +67,7 @@ export class EscalationViewComponent {
       id: 'ESC-2024-012',
       title: 'Pressure Valve Leaking',
       severity: 'WARNING',
-      equipment: { name: 'Mixer Tank 3', icon: 'valve' }, // 'valve' might not be standard, using 'plumbing' or similar visually in HTML if needed, but text is fine
+      equipment: { name: 'Mixer Tank 3', icon: 'sensors' }, // 'valve' might not be standard, using 'plumbing' or similar visually in HTML if needed, but text is fine
       responsible: { name: 'R. Ray', avatar: 'https://i.pravatar.cc/150?u=rray' },
       time: '3h 05m',
       timeColor: 'text-dark'
