@@ -1,0 +1,350 @@
+// Variables
+$bg-color: #ffffff;
+$text-primary: #1F2937;
+$text-secondary: #6B7280;
+$brand-icon-bg: #FEF3C7; // Light orange/yellow background
+$brand-color: #D97706; // Icon color
+$active-bg: #F3F4F6;
+$border-color: #E5E7EB;
+$primary-blue: #3B82F6;
+$danger-color: #EF4444; // For notification badge
+$green-status: #10B981;
+
+:host {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid $border-color;
+    background-color: $bg-color;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+// Hide branding when sidebar is open (controlled by host class)
+:host.sidebar-open {
+    .navbar-left {
+
+        .brand-icon,
+        .brand-text {
+            display: none !important;
+        }
+    }
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 24px;
+}
+
+// Left Section: Brand
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+        background-color: $brand-icon-bg;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0; // Prevent shrinking
+
+        // Hide brand icon on larger screens (sidebar present)
+        @media (min-width: 1024px) {
+            display: none;
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            color: $brand-color;
+        }
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+
+        // Hide brand text on larger screens where sidebar is present
+        @media (min-width: 1024px) {
+            display: none;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: $text-primary;
+            margin: 0;
+            white-space: nowrap; // Prevent wrapping
+        }
+
+        .version {
+            font-size: 11px;
+            font-weight: 500;
+            color: $text-secondary;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .menu-btn {
+        display: none; // Hidden on desktop
+        background: none;
+        border: none;
+        color: $text-secondary;
+        cursor: pointer;
+        padding: 8px;
+        margin-right: 8px;
+    }
+}
+
+// Center Section: Navigation
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 8px;
+
+        .nav-item {
+            a {
+                text-decoration: none;
+                color: $text-secondary;
+                font-size: 14px;
+                font-weight: 500;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+                display: block;
+
+                &:hover {
+                    color: $text-primary;
+                    background-color: rgba($active-bg, 0.5);
+                }
+            }
+
+            &.active a {
+                background-color: $active-bg;
+                color: $text-primary;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+// Right Section: Actions & Profile
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .icon-btn {
+        background: none;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        color: $text-secondary;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $text-primary;
+            background-color: $active-bg;
+        }
+
+        .badge-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: #D97706; // Notification orange dot
+            border: 2px solid $bg-color;
+            border-radius: 50%;
+        }
+    }
+
+    .profile-section {
+        position: relative; // Ensure dropdown is positioned relative to this
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-left: 16px;
+        border-left: 1px solid $border-color;
+        cursor: pointer;
+        user-select: none;
+
+        .profile-info {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+
+            .name {
+                font-size: 14px;
+                font-weight: 600;
+                color: $text-primary;
+                line-height: 1.2;
+            }
+
+            .role {
+                font-size: 12px;
+                font-weight: 500;
+                color: #D97706; // Matching the shift lead color from image
+            }
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 40px;
+            height: 40px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .status-indicator {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                background-color: $green-status;
+                border: 2px solid $bg-color;
+                border-radius: 50%;
+            }
+        }
+
+        .dropdown-trigger {
+            background: none;
+            border: none;
+            color: $text-secondary;
+            cursor: pointer;
+            padding: 0 4px;
+            pointer-events: none; // Let click pass through to parent
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 160px;
+            background-color: $bg-color;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 4px;
+            z-index: 50;
+            animation: slideIn 0.2s ease-out;
+
+            .dropdown-item {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                padding: 8px 12px;
+                font-size: 14px;
+                color: $text-primary;
+                text-decoration: none;
+                border: none;
+                background: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.2s;
+                text-align: left;
+                box-sizing: border-box;
+
+                &:hover {
+                    background-color: $active-bg;
+                }
+
+                &.logout-btn {
+                    color: $danger-color;
+
+                    &:hover {
+                        background-color: rgba($danger-color, 0.1);
+                    }
+                }
+
+                svg {
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Responsiveness
+@media (max-width: 1024px) {
+    .navbar-center {
+        display: none;
+    }
+
+    .navbar-left .menu-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        padding: 0 12px; // Reduced padding further
+    }
+
+    .navbar-left {
+        .brand-text {
+            display: none; // Always hide title on mobile
+        }
+
+        .menu-btn {
+            padding: 4px; // tighter touch target area visual
+        }
+    }
+
+    .navbar-right {
+        gap: 4px; // Tight gap
+
+        .search-btn {
+            display: none; // Hide search on very small screens to save space
+        }
+
+        .profile-section {
+            padding-left: 6px;
+            gap: 8px;
+
+            .profile-info {
+                display: none; // Hide name/role on mobile
+            }
+
+            .dropdown-trigger {
+                display: none; // Hide arrow
+            }
+        }
+    }
+}

@@ -1,1 +1,110 @@
-<p>stat-card works!</p>
+<div class="status-container">
+    <div class="section-header">
+        <div class="header-content">
+            <span class="update-time">Last Updated: Today, 09:41 AM</span>
+            <h2>System Status</h2>
+        </div>
+        <div class="time-tabs">
+            <button class="tab-btn active">24 Hours</button>
+            <button class="tab-btn">7 Days</button>
+            <button class="tab-btn">30 Days</button>
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid">
+        <div class="status-card" *ngFor="let card of systemStatus">
+            <!-- Card Header: Icon & Menu -->
+            <div class="card-top">
+                <div class="icon-circle" [ngClass]="card.colorTheme">
+                    {{ card.icon }}
+                </div>
+                <div class="menu-dots">...</div>
+            </div>
+
+            <!-- Main Info -->
+            <div class="card-info">
+                <h3 class="card-title">{{ card.title }}</h3>
+                <div class="value-row">
+                    <span class="card-value">{{ card.value }}</span>
+                    <span class="trend-badge" [ngClass]="[card.colorTheme, card.isBadgeText ? 'text-badge' : '']">
+                        <span *ngIf="!card.isBadgeText">📈</span>
+                        {{ card.trendBadge }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Footer: Meta & Progress -->
+            <div class="card-footer">
+                <div class="meta-row">
+                    <span class="meta-label">{{ card.metaLabel }}</span>
+                    <span class="status-label" [ngClass]="card.colorTheme">{{ card.statusLabel }}</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" [ngClass]="card.colorTheme" [style.width.%]="card.progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section: Graph & Alerts -->
+    <div class="bottom-grid">
+        <!-- Energy Consumption Graph -->
+        <div class="graph-card">
+            <div class="card-header-row">
+                <div>
+                    <h3>Energy Consumption</h3>
+                    <p class="subtitle">Real-time power usage across Facility A</p>
+                </div>
+                <div class="actions">
+                    <button class="icon-btn">⬇️</button>
+                    <button class="icon-btn">⤢</button>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <!-- SVG Curve Overlay (Simplified representation) -->
+                <svg class="chart-curve" preserveAspectRatio="none" viewBox="0 0 100 50">
+                    <path d="M0,45 C20,30 40,30 60,35 S80,20 100,5" fill="none" class="curve-line" />
+                </svg>
+
+                <div class="bars-wrapper">
+                    <div class="bar-col" *ngFor="let bar of energyData">
+                        <div class="bar" [style.height.%]="bar.height" [class.active]="bar.active"></div>
+                    </div>
+                </div>
+
+                <div class="x-axis">
+                    <span>00:00</span>
+                    <span>06:00</span>
+                    <span>12:00</span>
+                    <span>18:00</span>
+                    <span>23:59</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Alerts -->
+        <div class="alerts-card">
+            <div class="card-header-row">
+                <h3>Recent Alerts</h3>
+                <a href="#" class="view-all">View All</a>
+            </div>
+
+            <div class="alerts-list">
+                <div class="alert-item" *ngFor="let alert of recentAlerts">
+                    <div class="bullet-col">
+                        <div class="bullet" [ngClass]="alert.color"></div>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-top">
+                            <span class="alert-title">{{ alert.title }}</span>
+                            <span class="alert-time">{{ alert.time }}</span>
+                        </div>
+                        <p class="alert-desc">{{ alert.desc }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

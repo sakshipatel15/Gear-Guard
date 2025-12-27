@@ -1,1 +1,109 @@
-<p>command-dashboard works!</p>
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <h1>Operations Center</h1>
+            <p class="subtitle">Real-time monitoring of Sector 7</p>
+        </div>
+        <div class="header-right">
+            <button class="btn btn-outline">
+                <span class="icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                </span> Filter View
+            </button>
+            <button class="btn btn-primary">
+                + New Request
+            </button>
+        </div>
+    </header>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+        <div class="stat-card" *ngFor="let stat of stats" [ngClass]="stat.colorClass">
+            <div class="stat-header">
+                <span class="stat-label">{{ stat.label }}</span>
+                <div class="stat-icon-wrapper">
+                    <span class="stat-icon-char">{{ stat.indicatorIcon }}</span>
+                </div>
+            </div>
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-subtext">
+                <span class="trend-indicator" [ngClass]="stat.subtextClass">
+                    <span *ngIf="stat.subtext.includes('new')">↑</span>
+                    <span *ngIf="stat.subtext.includes('closed')">↓</span>
+                    <span *ngIf="stat.subtext.includes('High')">→</span>
+                    {{ stat.subtext }}
+                </span>
+                <span class="subtext-label"> {{ stat.subtextLabel }}</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" [style.width.%]="stat.progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="content-grid">
+        <!-- Left Column: Activity Feed -->
+        <div class="card activity-feed-section">
+            <div class="card-header">
+                <h2>Live Activity Feed</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div class="feed-list">
+                <div class="feed-item" *ngFor="let item of activityFeed">
+                    <div class="feed-icon" [ngClass]="item.type">
+                        <span *ngIf="item.type === 'alert'">!</span>
+                        <span *ngIf="item.type === 'user'">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </span>
+                        <span *ngIf="item.type === 'success'">✓</span>
+                    </div>
+                    <div class="feed-content">
+                        <div class="feed-title-row">
+                            <h3 class="feed-title">{{ item.title }}</h3>
+                            <span class="feed-time">{{ item.virtualTime }}</span>
+                        </div>
+                        <p class="feed-desc">{{ item.desc }}</p>
+                        <div class="feed-tags" *ngIf="item.tags">
+                            <span class="tag" *ngFor="let tag of item.tags"
+                                [ngClass]="{'alert-tag': tag === 'AUTO-ALERT', 'priority-tag': tag === 'HIGH PRIORITY'}">
+                                {{ tag }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Recommendations -->
+        <div class="recommendations-section">
+            <div class="recommendation-header-card">
+                <div class="bulb-icon">💡</div>
+                <h2>What Should I Do Next?</h2>
+            </div>
+
+            <div class="rec-list">
+                <div class="rec-card" *ngFor="let rec of recommendations">
+                    <div class="rec-top">
+                        <span class="badge" [ngClass]="rec.badgeClass">{{ rec.badge }}</span>
+                        <span class="arrow-icon">→</span>
+                    </div>
+                    <h3 class="rec-title">{{ rec.title }}</h3>
+                    <p class="rec-desc">{{ rec.desc }}</p>
+                </div>
+            </div>
+
+            <button class="btn-block-outline">
+                View all recommendations
+            </button>
+        </div>
+    </div>
+</div>
