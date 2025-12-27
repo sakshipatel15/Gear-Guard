@@ -1,0 +1,60 @@
+<div class="modal-backdrop" (click)="authService.closeProfile()">
+    <div class="profile-card" (click)="$event.stopPropagation()">
+        <button class="btn-close" (click)="authService.closeProfile()">
+            <span class="material-icons">close</span>
+        </button>
+        <button class="btn-edit" *ngIf="!isEditing()" (click)="startEdit()">
+            <span class="material-icons">edit</span>
+        </button>
+
+        <div class="card-header">
+            <div class="avatar-wrapper">
+                <div class="avatar-initial">{{ authService.currentUser()?.name?.charAt(0) }}</div>
+            </div>
+            <h2 *ngIf="!isEditing()">{{ authService.currentUser()?.name }}</h2>
+            <div *ngIf="isEditing()" class="edit-input-group">
+                <input type="text" [(ngModel)]="editData.name" placeholder="Full Name" class="form-input">
+            </div>
+            <span class="role-badge">{{ authService.currentUser()?.role }}</span>
+        </div>
+
+        <div class="card-body">
+            <div class="info-group">
+                <label>Email Address</label>
+                <div class="value">{{ authService.currentUser()?.email }}</div>
+            </div>
+
+            <div class="info-group">
+                <label>Department</label>
+                <div class="value" *ngIf="!isEditing()">{{ 'Engineering' }}</div> <!-- Placeholder for now -->
+                <input *ngIf="isEditing()" type="text" [(ngModel)]="editData.department" placeholder="Department"
+                    class="form-input">
+            </div>
+
+            <div class="info-group">
+                <label>User ID</label>
+                <div class="value id-value">{{ authService.currentUser()?.id }}</div>
+            </div>
+
+            <div class="info-group">
+                <label>Status</label>
+                <div class="value status-active">
+                    <span class="dot"></span> Active
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="edit-actions" *ngIf="isEditing()">
+                <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+                <button class="btn-save" (click)="saveProfile()" [disabled]="isLoading()">
+                    {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+                </button>
+            </div>
+            <button class="btn-logout" *ngIf="!isEditing()" (click)="authService.initiateLogout()">
+                <span class="material-icons">logout</span>
+                Logout
+            </button>
+        </div>
+    </div>
+</div>

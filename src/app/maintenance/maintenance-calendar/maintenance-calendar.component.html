@@ -62,6 +62,12 @@
                     <div class="grid-cell" *ngFor="let time of timeSlots"></div>
                 </div>
 
+                <!-- Loading Overlay -->
+                <div *ngIf="isLoading"
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #6b7280; font-weight: 500;">
+                    Loading Schedule...
+                </div>
+
                 <!-- Overlay Events using absolute positioning relative to grid-body -->
                 <!-- 8:00 AM is top 0. Each hour slot approx 80px height -->
                 <div class="event-card" *ngFor="let event of events" [ngClass]="event.colorClass"

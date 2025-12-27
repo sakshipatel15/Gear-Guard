@@ -26,52 +26,57 @@
 
     <div class="navbar-center">
         <ul class="nav-links">
-            <li class="nav-item" [class.active]="activeLink === 'Overview'" (click)="setActive('Overview')">
-                <a href="javascript:void(0)">Overview</a>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a routerLink="/home">Overview</a>
             </li>
-            <li class="nav-item" [class.active]="activeLink === 'Equipment'" (click)="setActive('Equipment')">
-                <a href="javascript:void(0)">Equipment</a>
+            <li class="nav-item" routerLinkActive="active">
+                <a routerLink="/equipment-list">Equipment</a>
             </li>
-            <li class="nav-item" [class.active]="activeLink === 'Schedule'" (click)="setActive('Schedule')">
-                <a href="javascript:void(0)">Schedule</a>
+            <li class="nav-item" routerLinkActive="active">
+                <a routerLink="/maintenance-calendar">Schedule</a>
             </li>
-            <li class="nav-item" [class.active]="activeLink === 'Reports'" (click)="setActive('Reports')">
-                <a href="javascript:void(0)">Reports</a>
+            <li class="nav-item" routerLinkActive="active">
+                <a routerLink="/insights-dashboard">Reports</a>
             </li>
         </ul>
     </div>
 
     <div class="navbar-right">
-        <button class="icon-btn search-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-svg">
-                <path
-                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </button>
+        <!-- Search Wrapper -->
+        <div class="search-container" [class.expanded]="isSearchOpen">
+            <button class="icon-btn search-btn" (click)="toggleSearch()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-svg" *ngIf="!isSearchOpen">
+                    <path
+                        d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="material-icons" *ngIf="isSearchOpen">close</span>
+            </button>
 
-        <button class="icon-btn notif-btn">
-            <div class="badge-dot"></div>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-svg">
-                <path d="M18 8A6 6 0 0 0 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </button>
+            <input type="text" id="global-search-input" class="search-input"
+                [placeholder]="isSearchOpen ? 'Search pages...' : ''" (input)="onSearch($event)" [value]="searchQuery">
 
-        <div class="profile-section" (click)="toggleDropdown()">
-            <div class="profile-info">
-                <span class="name">Alex R.</span>
-                <span class="role">Shift Lead</span>
+            <!-- Search Results Dropdown -->
+            <div class="search-results" *ngIf="isSearchOpen && searchResults.length > 0">
+                <div class="result-item" *ngFor="let result of searchResults" (click)="navigateTo(result.route)">
+                    <span class="material-icons item-icon">description</span>
+                    {{ result.name }}
+                </div>
             </div>
-            <div class="profile-avatar">
-                <img src="https://ui-avatars.com/api/?name=Alex+R&background=0D8ABC&color=fff&rounded=true"
-                    alt="Profile">
+        </div>
+
+        <app-notification-bell></app-notification-bell>
+
+        <div class="profile-section">
+            <div class="profile-info" (click)="authService.openProfile()">
+                <span class="name">{{ authService.currentUser()?.name }}</span>
+                <span class="role">{{ authService.currentUser()?.role }}</span>
+            </div>
+            <div class="profile-avatar" (click)="authService.openProfile()">
+                <div class="avatar-initial">{{ authService.currentUser()?.name?.charAt(0) }}</div>
                 <div class="status-indicator"></div>
             </div>
-            <button class="dropdown-trigger">
+            <button class="dropdown-trigger" (click)="toggleDropdown()">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M6 9l6 6 6-6" />
@@ -80,15 +85,15 @@
 
             @if (isDropdownOpen) {
             <div class="dropdown-menu">
-                <a href="javascript:void(0)" class="dropdown-item">
+                <button class="dropdown-item" (click)="authService.openProfile()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     Profile
-                </a>
-                <button class="dropdown-item logout-btn">
+                </button>
+                <button class="dropdown-item logout-btn" (click)="logout()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>

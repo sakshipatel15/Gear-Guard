@@ -33,14 +33,24 @@
 
         <div class="right-actions">
             <button class="icon-btn square"><span class="material-icons">filter_list</span></button>
-            <button class="btn-new">
+            <button class="btn-new" (click)="openNewTechModal()">
                 <span class="material-icons">add</span> New Tech
             </button>
         </div>
     </div>
 
+    <!-- Modal Form -->
+    <app-technician-form *ngIf="showModal" [technician]="selectedTech" (closeEvent)="closeModal()"
+        (saveEvent)="onSave()">
+    </app-technician-form>
+
     <!-- Grid -->
     <div class="cards-grid">
+        <div class="loading-state" *ngIf="isLoading"
+            style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #6b7280;">
+            Compiling Roster Data...
+        </div>
+
         <div class="tech-card" *ngFor="let tech of technicians" [style.border-left-color]="tech.accentColor">
             <div class="card-header">
                 <div class="avatar-wrapper">
@@ -55,7 +65,7 @@
                         {{ tech.role }}
                     </div>
                 </div>
-                <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                <button class="more-btn" (click)="openEditModal(tech)"><span class="material-icons">edit</span></button>
             </div>
 
             <div class="status-row">
@@ -77,7 +87,8 @@
 
             <div class="progress-line" [style.background-color]="tech.accentColor"></div>
 
-            <button class="action-btn">
+            <button class="action-btn"
+                [routerLink]="tech.status === 'Available' ? '/maintenance-form' : '/technician-performance'">
                 {{ tech.status === 'Available' ? 'Assign Task' :
                 tech.status === 'Offline' ? 'Details' : 'View Profile' }}
             </button>

@@ -7,6 +7,10 @@ $border-light: #e5e7eb;
 $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $primary-color: #d97706; // Amber for primary actions as seen in design
 
+:host {
+    display: block; // Ensure it behaves as a block in flex container
+}
+
 .notification-container {
     position: relative;
     font-family: $font-stack;

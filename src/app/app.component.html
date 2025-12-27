@@ -1,9 +1,1 @@
-<div class="app-layout">
-    <app-sidebar class="app-sidebar" [isOpen]="isSidebarOpen" (close)="toggleSidebar()"></app-sidebar>
-    <main class="main-content">
-        <app-navbar [isSidebarOpen]="isSidebarOpen" (menuToggle)="toggleSidebar()"></app-navbar>
-        <div class="content-scrollable">
-            <router-outlet></router-outlet>
-        </div>
-    </main>
-</div>
+<router-outlet></router-outlet>

@@ -225,6 +225,21 @@ $success-color: #10B981;
             box-shadow: 0 0 0 1px $border-color;
         }
 
+        .avatar-initial {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
         .user-info {
             flex: 1;
             display: flex;

@@ -14,7 +14,7 @@
                     </svg>
                 </span> Filter View
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" routerLink="/maintenance-form">
                 + New Request
             </button>
         </div>
@@ -51,7 +51,7 @@
         <div class="card activity-feed-section">
             <div class="card-header">
                 <h2>Live Activity Feed</h2>
-                <a href="#" class="view-all">View All</a>
+                <a routerLink="/activity-feed" class="view-all">View All</a>
             </div>
             <div class="feed-list">
                 <div class="feed-item" *ngFor="let item of activityFeed">
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <button class="btn-block-outline">
+            <button class="btn-block-outline" routerLink="/recommendations">
                 View all recommendations
             </button>
         </div>
