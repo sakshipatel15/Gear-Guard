@@ -1,0 +1,497 @@
+// Variables
+$font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$bg-app: #f8f9fa;
+$bg-card: #ffffff;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$border-light: #e5e7eb;
+
+// Brand Colors
+$primary-brown: #b45309; // Dark Amber/Bronze as seen in image buttons
+$critical-red: #991b1b;
+$risk-amber: #d97706;
+$success-green: #16a34a;
+
+.insights-container {
+    padding: 2rem 3rem;
+    font-family: $font-stack;
+    background-color: $bg-app;
+    min-height: 100vh;
+    color: $text-primary;
+}
+
+// Header
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #111827;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+        color: $text-muted;
+        font-size: 0.95rem;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #a3a3a3;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid $border-light;
+
+            .status-dot {
+                width: 8px;
+                height: 8px;
+                background-color: #84cc16;
+                border-radius: 50%;
+            }
+        }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            border: 1px solid $border-light;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: $shadow-sm;
+
+            .material-icons {
+                font-size: 1.1rem;
+            }
+
+            &:hover {
+                background-color: #f9fafb;
+            }
+        }
+    }
+}
+
+// KPI Grid
+.kpi-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.kpi-card {
+    background: $bg-card;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-light;
+    position: relative;
+    overflow: hidden;
+
+    .kpi-content {
+        position: relative;
+        z-index: 1;
+
+        .label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: $text-secondary;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            .value {
+                font-size: 2.5rem;
+                font-weight: 700;
+                line-height: 1;
+                color: $text-primary;
+            }
+
+            .subtext {
+                font-size: 1rem;
+                font-weight: 600;
+
+                &.critical {
+                    color: $critical-red;
+                }
+
+                &.warning {
+                    color: $risk-amber;
+                }
+
+                &.info {
+                    color: $text-secondary;
+                }
+            }
+        }
+
+        .trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            gap: 0.25rem;
+
+            .material-icons {
+                font-size: 1rem;
+            }
+
+            &.up {
+                color: $critical-red;
+            }
+
+            // Bad trend
+            &.down {
+                color: $success-green;
+            }
+
+            // Good trend
+            &.neutral {
+                color: $text-secondary;
+            }
+        }
+    }
+
+    .kpi-bg-icon {
+        position: absolute;
+        top: 20%;
+        right: 1.5rem;
+        opacity: 0.05;
+        z-index: 0;
+
+        .material-icons {
+            font-size: 5rem;
+            color: $text-primary;
+        }
+    }
+}
+
+// Active Monitor
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #111827; // Darker
+}
+
+.monitor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // 3 columns
+    gap: 1.5rem;
+    // Row gap handling is automatic in grid
+}
+
+.monitor-card {
+    background: $bg-card;
+    border-radius: 12px;
+    border: 1px solid $border-light;
+    box-shadow: $shadow-sm;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: $shadow-md;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .icon-box {
+                width: 40px;
+                height: 40px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .material-icons {
+                    font-size: 1.25rem;
+                }
+
+                &.critical {
+                    background: #fee2e2;
+                    color: $critical-red;
+                }
+
+                &.risk {
+                    background: #fef3c7;
+                    color: $risk-amber;
+                }
+
+                &.optimization {
+                    background: #dcfce7;
+                    color: $success-green;
+                }
+
+                &.patch {
+                    background: #e0f2fe;
+                    color: #0369a1;
+                }
+
+                // Blueish for Patch
+            }
+
+            h4 {
+                font-size: 1rem;
+                font-weight: 700;
+                margin: 0;
+                color: $text-primary;
+                line-height: 1.3;
+            }
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+
+            &.critical {
+                background: #fee2e2;
+                color: $critical-red;
+            }
+
+            &.risk {
+                background: #fef3c7;
+                color: $risk-amber;
+            }
+
+            &.optimization {
+                background: #dcfce7;
+                color: $success-green;
+            }
+
+            &.patch {
+                background: #e0f2fe;
+                color: #0369a1;
+            }
+        }
+    }
+
+    .card-body {
+        flex: 1;
+
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: $text-primary;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: $text-secondary;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.5;
+        }
+
+        .visual-container {
+            margin-bottom: 1.5rem;
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 60px; // Ensure consistent height area
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            // Bar Chart
+            .bar-chart {
+                display: flex;
+                align-items: flex-end;
+                gap: 4px;
+                height: 40px;
+
+                .bar {
+                    width: 8px;
+                    background-color: #d1d5db; // Gray default
+                    border-radius: 2px;
+                    opacity: 0.6;
+
+                    &.high {
+                        background-color: #991b1b; // Red for high activity
+                        opacity: 1;
+                    }
+                }
+            }
+
+            // Progress Bar
+            .progress-container {
+                width: 100%;
+
+                .progress-bar-bg {
+                    height: 8px;
+                    background-color: #e5e7eb;
+                    border-radius: 99px;
+                    overflow: hidden;
+                    margin-bottom: 0.5rem;
+
+                    .progress-fill {
+                        height: 100%;
+                        background-color: $risk-amber;
+                    }
+                }
+
+                .progress-labels {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.75rem;
+                    color: $text-secondary;
+
+                    .val {
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            // Text Highlight
+            .text-highlight {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: 700;
+                color: $success-green;
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    // Hide visual container if empty/none
+    .visual-container:empty {
+        display: none;
+    }
+
+    // Actually the logic in HTML uses ngSwitch. If visualType is 'none', it renders nothing? 
+    // Wait, ngSwitch has no default case in my HTML. So 'none' will render nothing. 
+    // BUT the container div still exists with padding/bg.
+    // I need to only show visual container if type != none.
+
+    // Simplest fix:
+    // I can target the container via sibling or handle in HTML?
+    // I'll handle in HTML in next step or just accept it's empty space (image logic: Breaker box has no viz).
+    // Actually Breaker Box in image DOES have text content occupying the space? No, the text is longer (2 lines).
+    // The "Visual" area is absent for cards without visuals.
+    // I'll update HTML logic along with SCSS or just hide it via SCSS if :empty.
+    // .visual-container:not(:has(*)) { display: none; } // :has support?
+    // Safer: Update visual-container to have *ngIf="item.visualType !== 'none'" in HTML?
+    // I'll fix HTML slightly in verification step if needed, or rely on :empty in modern browsers.
+    // Let's use display: none for now if user has modern browser, otherwise it's just white space.
+
+    // Footer
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid $border-light; // Image doesn't show border? Buttons float.
+        // Actually image buttons are just at the bottom.
+        // Let's remove border top and just rely on margin.
+        padding-top: 1rem;
+        margin-top: auto;
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: $text-muted;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+
+            &:hover {
+                color: $text-primary;
+            }
+        }
+
+        .btn-primary {
+            background-color: $primary-brown;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(180, 83, 9, 0.3);
+            transition: background 0.2s;
+
+            &:hover {
+                background-color: darken($primary-brown, 10%);
+            }
+        }
+    }
+}
+
+// Media Queries
+@media (max-width: 1024px) {
+    .kpi-section {
+        grid-template-columns: 1fr;
+    }
+
+    .monitor-grid {
+        grid-template-columns: 1fr 1fr; // 2 cols
+    }
+}
+
+@media (max-width: 768px) {
+    .insights-container {
+        padding: 1.5rem;
+    }
+
+    .monitor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-section {
+        flex-direction: column;
+        gap: 1rem;
+
+        .header-actions {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+}

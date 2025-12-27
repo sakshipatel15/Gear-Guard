@@ -1,1 +1,102 @@
-<p>category-management works!</p>
+<div class="category-container">
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <span>Home</span> / <span>System</span> / <span class="current">Categories</span>
+    </div>
+
+    <div class="header-section">
+        <div class="header-content">
+            <h2>Category Management</h2>
+            <p class="subtitle">Organize and manage maintenance classifications and responsibilities.</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-filter">
+                <span class="material-icons">filter_list</span>
+                Filter
+            </button>
+            <button class="btn-add">
+                <span class="material-icons">add</span>
+                New Category
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <span class="material-icons">search</span>
+        <input type="text" placeholder="Search categories by name, person or company...">
+    </div>
+
+    <!-- Data Table Card -->
+    <div class="content-card">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-name">CATEGORY NAME</th>
+                        <th class="col-person">RESPONSIBLE PERSON</th>
+                        <th class="col-company">COMPANY</th>
+                        <th class="col-status">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cat of categories">
+                        <td class="col-name">
+                            <div class="name-wrapper">
+                                <div class="icon-box" [style.background-color]="cat.iconBg"
+                                    [style.color]="cat.iconColor">
+                                    <span class="material-icons">{{ cat.icon }}</span>
+                                </div>
+                                <div class="text-content">
+                                    <div class="title">{{ cat.name }}</div>
+                                    <div class="subtext">{{ cat.subtext }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-person">
+                            <div class="person-wrapper">
+                                <!-- Using placeholder divs for avatars if image fails or generic logic -->
+                                <div class="avatar">
+                                    <img [src]="cat.responsible.avatar" alt="{{cat.responsible.name}}"
+                                        onerror="this.style.display='none'">
+                                    <!-- Fallback initial if img fails (handled by CSS/JS ideally, simple here) -->
+                                    <span class="fallback-initial">{{ cat.responsible.name.charAt(0) }}</span>
+                                </div>
+                                <div class="text-content">
+                                    <div class="name">{{ cat.responsible.name }}</div>
+                                    <div class="role">{{ cat.responsible.role }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-company">
+                            <div class="company-wrapper">
+                                <span class="material-icons">business</span> <!-- Generic building icon -->
+                                {{ cat.company }}
+                            </div>
+                        </td>
+                        <td class="col-status">
+                            <span class="status-badge" [class.active]="cat.status === 'Active'"
+                                [class.review]="cat.status === 'Review'" [class.inactive]="cat.status === 'Inactive'">
+                                {{ cat.status }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer">
+            <span class="showing-text">Showing <strong>1</strong> to <strong>5</strong> of <strong>42</strong>
+                entries</span>
+            <div class="pagination">
+                <button class="btn-page" disabled><span class="material-icons">chevron_left</span></button>
+                <button class="btn-page active">1</button>
+                <button class="btn-page">2</button>
+                <button class="btn-page">3</button>
+                <span class="dots">...</span>
+                <button class="btn-page">8</button>
+                <button class="btn-page"><span class="material-icons">chevron_right</span></button>
+            </div>
+        </div>
+    </div>
+</div>

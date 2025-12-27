@@ -1,0 +1,498 @@
+// Variables
+$font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+$text-primary: #1f2937; // Gray-900
+$text-secondary: #6b7280; // Gray-500
+$text-muted: #9ca3af; // Gray-400
+$bg-app: #f8f9fa;
+$bg-card: #ffffff;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$border-light: #e5e7eb;
+
+// Brand Colors
+$primary-orange: #d97706; // Amber-600
+$danger-red: #dc2626; // Red-600
+$success-green: #16a34a; // Green-600
+$warning-yellow: #f59e0b; // Amber-500
+
+.maintenance-container {
+    padding: 2rem 3rem;
+    font-family: $font-stack;
+    background-color: $bg-app;
+    min-height: 100vh;
+    color: $text-primary;
+}
+
+// Header
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-light;
+    padding-bottom: 1rem;
+
+    h2 {
+        font-size: 1.75rem;
+        font-weight: 800; // Extra bold for premium feel
+        color: #111827;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+        color: $text-muted;
+        font-size: 0.95rem;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .system-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #a3a3a3; // Light gray text
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #84cc16; // Lime green
+            border-radius: 50%;
+        }
+    }
+}
+
+// KPI Grid
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background: $bg-card;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-light;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+    }
+
+    .kpi-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: $text-muted;
+            letter-spacing: 0.05em;
+        }
+
+        .material-icons {
+            font-size: 1.25rem;
+
+            &.critical {
+                color: #991b1b;
+            }
+
+            // Dark Red
+            &.warning {
+                color: $warning-yellow;
+            }
+
+            &.success {
+                color: $success-green;
+            }
+        }
+    }
+
+    .kpi-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        color: $text-primary; // Default
+
+        &.critical {
+            color: #991b1b;
+        }
+
+        &.warning {
+            color: $warning-yellow;
+        }
+
+        &.success {
+            color: $success-green;
+        }
+    }
+
+    .kpi-subtext {
+        font-size: 0.85rem;
+        color: $text-secondary;
+    }
+}
+
+// Filters
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .filters {
+        display: flex;
+        gap: 1rem;
+
+        .filter-dropdown {
+            background: $bg-card;
+            border: 1px solid $border-light;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: $text-primary;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: $shadow-sm;
+
+            &:hover {
+                background-color: #f9fafb;
+            }
+
+            .material-icons {
+                font-size: 1.25rem;
+                color: $text-muted;
+            }
+        }
+    }
+
+    .refresh-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: transparent;
+        border: none;
+        color: $primary-orange;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+
+        .material-icons {
+            font-size: 1.1rem;
+        }
+
+        &:hover {
+            color: darken($primary-orange, 10%);
+        }
+    }
+}
+
+// Action List
+.actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.action-card {
+    background: $bg-card;
+    border-radius: 12px; // Rounded
+    box-shadow: $shadow-sm; // Subtle shadow
+    display: flex;
+    overflow: hidden; // For left border
+    transition: box-shadow 0.2s;
+    position: relative; // For pseudo-element border approach if needed, but div is fine.
+
+    &:hover {
+        box-shadow: $shadow-md;
+    }
+
+    .card-left-border {
+        width: 6px;
+        flex-shrink: 0;
+    }
+
+    &.critical .card-left-border {
+        background-color: #991b1b;
+    }
+
+    // Deep Red
+    &.warning .card-left-border {
+        background-color: $warning-yellow;
+    }
+
+    &.success .card-left-border {
+        background-color: $success-green;
+    }
+
+    .card-content {
+        flex: 1;
+        padding: 1.5rem 2rem;
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start; // Align top
+        // Image shows aligned roughly center or top. Description is long.
+    }
+
+    // Icon Section
+    .icon-section {
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            .material-icons {
+                font-size: 1.5rem;
+            }
+
+            &.critical {
+                background-color: #fee2e2;
+                color: #991b1b;
+            }
+
+            &.warning {
+                background-color: #fef9c3;
+                color: $warning-yellow;
+            }
+
+            // Custom yellow bg? Image has beige icon bg for warning.
+            &.success {
+                background-color: #dcfce7;
+                color: $success-green;
+            }
+
+            // Image M-3 Warning icon has a very specific beige/yellow bg.
+            // Image P-101 Critical has a light pinkish bg.
+        }
+    }
+
+    // Details Section
+    .details-section {
+        flex: 1;
+
+        .details-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+
+            h3 {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                letter-spacing: 0.05em;
+
+                &.critical {
+                    background-color: #fee2e2;
+                    color: #991b1b;
+                }
+
+                &.warning {
+                    background-color: #fef3c7;
+                    color: $warning-yellow;
+                }
+
+                &.success {
+                    background-color: #dcfce7;
+                    color: $success-green;
+                }
+            }
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #4b5563; // Darker gray for readability
+            margin: 0 0 0.75rem 0;
+            line-height: 1.5;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: $text-muted;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+
+                .material-icons {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    // Actions Buttons Section
+    .actions-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        align-self: flex-start; // Align top with content? Or center? Image says Center vertically relative to card?
+        // Actually looking at image, buttons are aligned with the text block vertically or just centered in the card height? 
+        // They look top-aligned with the text block but the card has padding so they sit nicely. 
+        // Let's use `margin-top: 0.25rem` to align with header visually if needed.
+        margin-top: 0.25rem;
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+
+            .material-icons {
+                font-size: 1.1rem;
+            }
+        }
+
+        .btn-secondary {
+            background: #fff;
+            border-color: $border-light;
+            color: $text-primary;
+
+            &:hover {
+                background-color: #f9fafb;
+                border-color: #d1d5db;
+            }
+        }
+
+        .btn-primary {
+            &.btn-orange {
+                background-color: #d97706; // Amber/Orange
+                color: #fff;
+                box-shadow: 0 1px 2px rgba(217, 119, 6, 0.3);
+
+                &:hover {
+                    background-color: #b45309;
+                }
+            }
+
+            &.btn-white {
+                // For Optimization Apply Settings
+                background-color: #fff;
+                border-color: $border-light; // Or borderless? Image optimization button looks like a white card button.
+                color: $success-green; // Green text for Apply Settings check
+
+                .material-icons {
+                    color: $success-green;
+                }
+
+                &:hover {
+                    background-color: #f0fdf4;
+                }
+            }
+        }
+    }
+}
+
+// Button override specifically for Schedule Inspection (Warning M-3)
+// Image shows a beige/light orange button "Schedule Inspection"
+// My data logic assigns 'btn-orange' to warnings. I should add a specific visual for "Warning" action if it's different.
+// The image shows "Schedule Inspection" button as Light Orange Background with Dark Orange Text.
+// Let's create a .btn-light-orange class and update HTML logic or just CSS logic.
+
+.action-card.warning .btn-primary.btn-orange {
+    background-color: #ffedd5; // Orange-100
+    color: #c2410c; // Orange-700
+    box-shadow: none;
+    border: none;
+
+    &:hover {
+        background-color: #fed7aa;
+    }
+}
+
+// Emergency Stop Button (Critical Unit-4)
+// Image: Solid Orange/Brown. Matches my .btn-orange logic.
+
+// Create Work Order (Critical P-101)
+// Image: Solid Orange. Matches my .btn-orange logic.
+
+// Responsive
+@media (max-width: 1024px) {
+    .kpi-grid {
+        grid-template-columns: 1fr; // Stack KPIs on small screens? Or 3 cols is fine on tablet 1024? 
+        // Maybe stack on mobile.
+    }
+
+    .action-card {
+        .card-content {
+            flex-direction: column;
+
+            .actions-section {
+                align-self: flex-start;
+                margin-top: 1rem;
+                width: 100%;
+
+                button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .maintenance-container {
+        padding: 1.5rem;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-section {
+        flex-direction: column;
+        gap: 1rem;
+
+        .system-status {
+            align-self: flex-start;
+        }
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+
+        .filters {
+            flex-direction: column;
+        }
+    }
+}

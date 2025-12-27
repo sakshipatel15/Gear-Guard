@@ -1,0 +1,634 @@
+// Variables
+$font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+$text-primary: #111827; // Darker gray for better contrast
+$text-secondary: #4b5563;
+$text-muted: #9ca3af;
+$bg-app: #f9fafb; // Slightly cooler gray/white
+$bg-card: #ffffff;
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06); // Smoother
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02); // For hover
+$border-light: #f3f4f6;
+
+// Brand Colors
+$primary-orange: #f97316; // Vibrant Orange
+$primary-orange-light: #fff7ed;
+$primary-orange-dark: #c2410c;
+$success-green: #10b981;
+$success-bg: #ecfdf5;
+$danger-red: #ef4444;
+
+.performance-container {
+    padding: 2.5rem 3.5rem; // More spacious
+    font-family: $font-stack;
+    background-color: $bg-app;
+    min-height: 100vh;
+    color: $text-primary;
+}
+
+// Breadcrumbs
+.breadcrumbs {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+
+    span {
+        cursor: pointer;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $text-primary;
+        }
+
+        &.current {
+            color: $text-secondary;
+            cursor: default;
+        }
+    }
+}
+
+// Header
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+
+    .text-content {
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: $text-primary;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.03em; // Tighter, modern
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            color: $text-secondary;
+            font-size: 1rem;
+            font-weight: 400;
+            margin: 0;
+            max-width: 650px;
+            line-height: 1.5;
+        }
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 1rem;
+
+        .filter-dropdown {
+            background: #fff;
+            border: 1px solid $border-light;
+            padding: 0.65rem 1.1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: $text-secondary;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: $shadow-sm;
+            font-weight: 500;
+            transition: all 0.2s;
+
+            .material-icons {
+                color: $text-muted;
+                font-size: 1.2rem;
+            }
+
+            &:hover {
+                background: #fff;
+                border-color: darken($border-light, 10%);
+                box-shadow: $shadow-md;
+                color: $text-primary;
+            }
+        }
+
+        .btn-export {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            background: $primary-orange;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.25); // Color shadow
+            transition: all 0.2s;
+
+            &:hover {
+                background: darken($primary-orange, 5%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 6px rgba(249, 115, 22, 0.3);
+            }
+
+            .material-icons {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+// KPI Grid
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+
+    .kpi-card {
+        background: $bg-card;
+        border-radius: 16px; // Softer corners
+        padding: 1.75rem;
+        box-shadow: $shadow-sm;
+        border: 1px solid rgba(0, 0, 0, 0.03); // Very subtle border
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: $shadow-lg;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+
+            .label {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: $text-muted;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+
+            .kpi-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px; // Squircle
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.3s;
+
+                .material-icons {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
+        &:hover .kpi-icon {
+            transform: scale(1.1);
+        }
+
+        .main-metric {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+
+            .value {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: $text-primary;
+                line-height: 1;
+                letter-spacing: -0.02em;
+            }
+
+            .trend-badge {
+                font-size: 0.8rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                padding: 0.2rem 0.6rem;
+                border-radius: 99px; // Pill
+
+                &.up {
+                    color: $success-green;
+                    background: $success-bg;
+                }
+
+                &.down-good {
+                    color: $success-green;
+                    background: $success-bg;
+                }
+
+                .material-icons {
+                    font-size: 1rem;
+                }
+            }
+
+            .total-text {
+                font-size: 1.1rem;
+                color: $text-muted;
+                font-weight: 500;
+            }
+        }
+
+        // Specific Card Styles
+        &.efficiency-card {
+            .kpi-icon {
+                background: $primary-orange-light;
+                color: $primary-orange;
+            }
+
+            .progress-bar-container {
+                height: 8px;
+                background: #f3f4f6;
+                border-radius: 99px;
+                overflow: hidden;
+                margin-bottom: 0.75rem;
+
+                .progress-fill {
+                    height: 100%;
+                    background: linear-gradient(90deg, #fdba74 0%, $primary-orange 100%); // Gradient
+                    border-radius: 99px;
+                }
+            }
+
+            .target-text {
+                font-size: 0.85rem;
+                color: $text-muted;
+                font-weight: 500;
+            }
+        }
+
+        &.repair-card {
+            .kpi-icon {
+                background: #eff6ff;
+                color: #3b82f6;
+            }
+
+            // Blue for time
+            .description-text {
+                font-size: 0.95rem;
+                color: $text-secondary;
+                margin-bottom: 0.4rem;
+                line-height: 1.4;
+            }
+
+            .sub-text {
+                font-size: 0.8rem;
+                color: $text-muted;
+            }
+        }
+
+        &.active-card {
+            .kpi-icon {
+                background: #f0fdf4;
+                color: $success-green;
+            }
+
+            // Green for people
+
+            .status-legend {
+                display: flex;
+                gap: 1.25rem;
+                margin-bottom: 1.25rem;
+
+                .legend-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: $text-secondary;
+
+                    .dot {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); // Ring effect
+                    }
+                }
+            }
+
+            .sub-text {
+                font-size: 0.85rem;
+                color: $text-muted;
+                font-family: monospace;
+            }
+        }
+    }
+}
+
+// Charts Grid
+.charts-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr; // Fixed width for donut
+    gap: 1.5rem;
+
+    .chart-card {
+        background: $bg-card;
+        border-radius: 16px;
+        box-shadow: $shadow-sm;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            h3 {
+                font-size: 1.2rem;
+                font-weight: 800;
+                color: $text-primary;
+                margin: 0;
+            }
+
+            .menu-icon {
+                color: $text-muted;
+                cursor: pointer;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: $text-primary;
+                }
+            }
+
+            .btn-text {
+                background: none;
+                border: none;
+                color: $primary-orange;
+                font-weight: 700;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: color 0.2s;
+
+                &:hover {
+                    color: darken($primary-orange, 10%);
+                }
+            }
+        }
+
+        .sub-header {
+            color: $text-secondary;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        // Donut Chart logic
+        .donut-chart-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0 2rem 0;
+
+            .donut-chart {
+                width: 220px;
+                height: 220px;
+                border-radius: 50%;
+                background: conic-gradient($success-green 0% 85%,
+                        $primary-orange 85% 95%,
+                        $danger-red 95% 100%);
+                position: relative;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Shadow for depth
+
+                // Hole
+                .center-hole {
+                    position: absolute;
+                    top: 25px;
+                    left: 25px;
+                    right: 25px;
+                    bottom: 25px;
+                    background: #fff;
+                    border-radius: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); // Embossed look
+
+                    .center-value {
+                        font-size: 2.5rem;
+                        font-weight: 800;
+                        color: $text-primary;
+                        line-height: 1;
+                        margin-bottom: 0.25rem;
+                    }
+
+                    .center-label {
+                        font-size: 0.75rem;
+                        font-weight: 700;
+                        color: $text-muted;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                    }
+                }
+            }
+        }
+
+        .chart-legend {
+            margin-top: auto;
+
+            .legend-row {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+
+                .left {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+
+                    .dot {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .label {
+                        font-size: 0.9rem;
+                        color: $text-secondary;
+                        font-weight: 600;
+                    }
+                }
+
+                .right-percent {
+                    font-weight: 700;
+                    color: $text-primary;
+                    font-size: 0.9rem;
+                }
+
+                .row-progress-bar {
+                    width: 100%;
+                    height: 4px;
+                    border-radius: 99px;
+                    margin-top: 0.5rem;
+                    opacity: 0.2; // Softer track
+                    position: relative;
+
+                    // The colored bar itself needs to be a pseudo or just the bg
+                    // But here we are using bg color directly.
+                    // Let's make it look like a track + fill using gradient logic or just solid opacity.
+                    // Actually, let's keep it solid but use box-shadow to glow?
+                    // Design: Just a thin line.
+                    opacity: 1; // reset
+                    background: #f3f4f6; // track
+                    overflow: hidden;
+
+                    &::after {
+                        // The fill
+                        content: '';
+                        display: block;
+                        height: 100%;
+                        background: currentColor; // Inherit color from parent style logic?
+                        // No complex TS logic for colors here.
+                        // Revert to simple background-color set in HTML but control opacity?
+                        // The HTML sets [style.background-color].
+                        // So the element IS the fill. To imply a track, we need a parent wrapper.
+                        // OR: adjust alignment. The design has a line BELOW.
+                    }
+                }
+            }
+        }
+
+        // Bar Chart Metrics
+        .bar-chart-metrics {
+            height: 300px; // Taller
+            position: relative;
+            padding-bottom: 2rem;
+            margin-top: 1rem;
+            flex-grow: 1;
+
+            .grid-lines {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                z-index: 0;
+
+                .line {
+                    width: 100%;
+                    height: 1px;
+                    background: #f3f4f6;
+                    // Remove dash for cleaner look
+                }
+            }
+
+            .bars-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 2rem;
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-end;
+                z-index: 1;
+                padding: 0 1.5rem;
+
+                .bar-group {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 48px;
+                    height: 100%;
+                    justify-content: flex-end;
+                    transition: transform 0.2s;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: translateY(-5px);
+
+                        .bar-fill {
+                            filter: brightness(1.1);
+                        }
+
+                        .bar-label {
+                            color: $primary-orange;
+                        }
+                    }
+
+                    .bar-fill {
+                        width: 100%;
+                        // Nice gradient for bars
+                        background: linear-gradient(to top, #fdba74 0%, $primary-orange 100%);
+                        border-radius: 6px 6px 0 0;
+                        transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); // Bouncy effect
+                        box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2); // Colored shadow
+                    }
+
+                    .bar-label {
+                        margin-top: 1rem;
+                        font-size: 0.8rem;
+                        color: $text-muted;
+                        font-weight: 600;
+                        transition: color 0.2s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Media Queries
+@media (max-width: 1100px) {
+    .charts-grid {
+        grid-template-columns: 1fr; // Stack donut
+
+        .chart-card {
+            align-items: center;
+
+            .bar-chart-metrics {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .performance-container {
+        padding: 1.5rem;
+    }
+
+    .header-section {
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .header-actions {
+            flex-wrap: wrap;
+            width: 100%;
+
+            .filter-dropdown {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .btn-export {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    }
+
+    .charts-grid {
+        gap: 1rem;
+    }
+}

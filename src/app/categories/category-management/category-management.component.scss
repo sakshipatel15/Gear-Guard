@@ -1,0 +1,422 @@
+// Variables
+$font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+$bg-app: #f8f9fa;
+$bg-card: #ffffff;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$border-light: #e5e7eb;
+
+// Brand Colors
+$primary-orange: #f97316; // Orange-500
+$bg-orange-light: #fff7ed; // Orange-50
+
+.category-container {
+    padding: 2rem 3rem;
+    font-family: $font-stack;
+    background-color: $bg-app;
+    min-height: 100vh;
+    color: $text-primary;
+}
+
+// Breadcrumbs
+.breadcrumbs {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-bottom: 1rem;
+
+    span {
+        cursor: pointer;
+
+        &:hover {
+            color: $text-primary;
+        }
+
+        &.current {
+            color: $text-primary;
+            font-weight: 500;
+        }
+    }
+}
+
+// Header
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+
+    .header-content {
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: $text-muted;
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin: 0;
+        }
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 1rem;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            .material-icons {
+                font-size: 1.1rem;
+            }
+        }
+
+        .btn-filter {
+            background: #fff;
+            border: 1px solid $border-light;
+            color: $text-primary;
+            box-shadow: $shadow-sm;
+
+            &:hover {
+                background: #f9fafb;
+            }
+        }
+
+        .btn-add {
+            background: $primary-orange;
+            border: 1px solid transparent;
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(249, 115, 22, 0.3);
+
+            &:hover {
+                background: darken($primary-orange, 5%);
+            }
+        }
+    }
+}
+
+// Search Bar
+.search-bar {
+    margin-bottom: 2rem;
+    position: relative;
+    max-width: 500px; // Image shows search bar isn't full width, but usually better UX to be wide or fixed. 
+    // Image shows it quite wide but left aligned.
+
+    .material-icons {
+        position: absolute;
+        left: 1.25rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $text-muted;
+        font-size: 1.25rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.875rem 1rem 0.875rem 3rem; // Left padding for icon
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: $text-primary;
+        outline: none;
+        background: #fff;
+        box-shadow: $shadow-sm;
+        transition: all 0.2s;
+
+        &::placeholder {
+            color: $text-muted;
+        }
+
+        &:focus {
+            border-color: $primary-orange;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+        }
+    }
+}
+
+// Content Card
+.content-card {
+    background: $bg-card;
+    border-radius: 12px;
+    box-shadow: $shadow-sm;
+    border: 1px solid $border-light;
+    overflow: hidden;
+
+    // Table
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+
+            thead {
+                th {
+                    text-align: left;
+                    padding: 1rem 1.75rem;
+                    font-size: 0.7rem; // Small uppercase
+                    font-weight: 700;
+                    color: $text-muted; // Light gray headers - #6b7280 or lighter
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    border-bottom: 1px solid $border-light;
+                    background: #f9fafb; // Very light gray header bg
+                }
+            }
+
+            tbody {
+                tr {
+                    border-bottom: 1px solid #f3f4f6;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    &:hover {
+                        background-color: #ffff;
+                    }
+
+                    // Image rows are white. Hover effect subtle.
+
+                    td {
+                        padding: 1.25rem 1.75rem;
+                        vertical-align: middle;
+                        font-size: 0.9rem;
+                        color: $text-primary;
+                    }
+
+                    // Column Specifics
+                    .col-name {
+                        width: 35%;
+
+                        .name-wrapper {
+                            display: flex;
+                            align-items: center;
+                            gap: 1rem;
+
+                            .icon-box {
+                                width: 42px;
+                                height: 42px;
+                                border-radius: 8px; // Soft square
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                flex-shrink: 0;
+
+                                .material-icons {
+                                    font-size: 1.25rem;
+                                }
+                            }
+
+                            .text-content {
+                                .title {
+                                    font-weight: 600;
+                                    color: #111827;
+                                    margin-bottom: 0.1rem;
+                                }
+
+                                .subtext {
+                                    font-size: 0.8rem;
+                                    color: $text-secondary;
+                                }
+                            }
+                        }
+                    }
+
+                    .col-person {
+                        width: 25%;
+
+                        .person-wrapper {
+                            display: flex;
+                            align-items: center;
+                            gap: 1rem;
+
+                            .avatar {
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                overflow: hidden;
+                                background: #e5e7eb;
+                                position: relative;
+                                flex-shrink: 0;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+
+                                .fallback-initial {
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
+                                    font-weight: 600;
+                                    color: $text-secondary;
+                                    font-size: 1rem;
+                                }
+                            }
+
+                            .text-content {
+                                .name {
+                                    font-weight: 600; // Semi-bold
+                                    color: #111827;
+                                    font-size: 0.9rem;
+                                    margin-bottom: 0.1rem;
+                                }
+
+                                .role {
+                                    font-size: 0.8rem;
+                                    color: $text-muted;
+                                }
+                            }
+                        }
+                    }
+
+                    .col-company {
+                        width: 25%;
+
+                        .company-wrapper {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.6rem;
+                            color: #4b5563; // Dark gray text
+                            font-weight: 500;
+
+                            .material-icons {
+                                color: $text-muted;
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+
+                    .col-status {
+                        width: 15%;
+
+                        .status-badge {
+                            display: inline-block;
+                            padding: 0.35rem 0.85rem;
+                            border-radius: 99px; // Pill shape
+                            font-size: 0.8rem;
+                            font-weight: 600;
+
+                            &.active {
+                                background-color: #dcfce7; // Green-100
+                                color: #15803d; // Green-700
+                            }
+
+                            &.review {
+                                background-color: #fef9c3; // Yellow-100
+                                color: #a16207; // Yellow-800
+                            }
+
+                            &.inactive {
+                                background-color: #f3f4f6; // Gray-100
+                                color: #374151; // Gray-700
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Card Footer
+    .card-footer {
+        padding: 1rem 1.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid $border-light;
+
+        .showing-text {
+            color: $text-muted;
+            font-size: 0.85rem;
+
+            strong {
+                color: $text-primary;
+            }
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.25rem;
+
+            .btn-page {
+                width: 32px; // Fixed square/circle size
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #e5e7eb;
+                background: #fff;
+                border-radius: 4px;
+                cursor: pointer;
+                color: $text-secondary;
+                font-size: 0.85rem;
+                transition: all 0.2s;
+
+                &:hover:not(:disabled) {
+                    background: #f9fafb;
+                    color: $text-primary;
+                }
+
+                &:disabled {
+                    cursor: default;
+                    opacity: 0.5;
+                }
+
+                &.active {
+                    background-color: #fff7ed; // Orange-50
+                    border-color: #fdba74; // Orange-300
+                    color: $primary-orange; // Orange text
+                    font-weight: 600;
+                }
+            }
+
+            .dots {
+                display: flex;
+                align-items: center;
+                color: $text-muted;
+                padding: 0 0.25rem;
+            }
+        }
+    }
+}
+
+// Media Queries
+@media (max-width: 768px) {
+    .category-container {
+        padding: 1.5rem;
+    }
+
+    .header-section {
+        flex-direction: column;
+        gap: 1rem;
+
+        .header-actions {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+}

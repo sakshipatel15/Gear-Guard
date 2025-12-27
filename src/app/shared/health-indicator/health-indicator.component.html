@@ -1,1 +1,153 @@
-<p>health-indicator works!</p>
+<div class="health-indicator-container">
+    <div class="header-section">
+        <div>
+            <h2>Health Indicator Badges</h2>
+            <p class="subtitle">Core component variants for system status visualization.</p>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm documentation-btn">Documentation</button>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4" *ngFor="let badge of badges">
+            <div class="card-custom badge-card">
+                <div class="badge-label">{{ badge.label }}</div>
+                <div class="status-box" [ngClass]="getBadgeClass(badge.status)">
+                    <h3>
+                        <span class="material-icons">{{ badge.icon }}</span>
+                        {{ badge.value }}%
+                    </h3>
+                    <p>{{ badge.subtext }}</p>
+                </div>
+                <div class="pill-badge" [ngClass]="getBadgeClass(badge.status)">
+                    <span class="material-icons">check_circle</span>
+                    {{ badge.value }}%
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Equipment Status Overview</h2>
+    <p class="subtitle">Integrated view with images and detailed metrics.</p>
+
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6" *ngFor="let equipment of equipmentList">
+            <div class="card-custom equipment-card">
+                <div class="equipment-image">
+                    <img [src]="equipment.image" [alt]="equipment.name">
+                </div>
+                <div class="equipment-details">
+                    <div class="header-row">
+                        <h4>{{ equipment.name }}</h4>
+                        <div class="status-pill" [ngClass]="equipment.status.toLowerCase()">
+                            <span class="material-icons" style="font-size: 14px;">
+                                {{ equipment.status === 'Online' ? 'check_circle' : 'warning' }}
+                            </span>
+                            {{ equipment.status }}
+                        </div>
+                    </div>
+                    <p class="location">{{ equipment.location }}</p>
+
+                    <div class="health-row">
+                        <span>Health Score</span>
+                        <div class="score" [style.color]="getStatusColor(equipment.status)">
+                            {{ equipment.healthScore }}%
+                            <small [style.color]="'#6b7280'">{{ equipment.status === 'Online' ? 'Optimal Range' : 'Check
+                                Filters' }}</small>
+                        </div>
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" [style.width.%]="equipment.healthScore"
+                            [style.background-color]="getStatusColor(equipment.status)">
+                        </div>
+                    </div>
+
+                    <div class="footer-row">
+                        <div class="metrics">
+                            <div class="metric" *ngFor="let metric of equipment.metrics">
+                                <span class="label">{{ metric.label }}</span>
+                                <span class="value">{{ metric.value }}</span>
+                            </div>
+                        </div>
+
+                        <a href="javascript:void(0)" class="action-link">
+                            {{ equipment.status === 'Online' ? 'View Report' : 'Diagnostics' }}
+                            <span class="material-icons">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-custom log-section">
+        <div class="log-header">
+            <h3>
+                Active Machinery Log
+                <small>Real-time telemetry data.</small>
+            </h3>
+            <div class="actions">
+                <button class="btn btn-filter">
+                    <span class="material-icons">filter_list</span>
+                    Filter
+                </button>
+                <button class="btn btn-add-unit">
+                    <span class="material-icons">add</span>
+                    Add Unit
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Asset Name</th>
+                        <th>Location</th>
+                        <th>Last Sync</th>
+                        <th>Health Status</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let log of logs">
+                        <td>
+                            <div class="asset-wrapper">
+                                <div class="icon-box">
+                                    <span class="material-icons">{{ log.icon }}</span>
+                                </div>
+                                <div class="asset-info">
+                                    <span>{{ log.name }}</span>
+                                    <span class="id">ID: {{ log.id }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ log.location }}</td>
+                        <td>{{ log.lastSync }}</td>
+                        <td>
+                            <span class="status-dot" [style.background-color]="getStatusColor(log.status)"></span>
+                            <strong>{{ log.health }}%</strong>
+                            <span *ngIf="log.status !== 'Optimal'" class="status-badge-inline"
+                                [ngClass]="log.status.toLowerCase()">
+                                {{ log.status }}
+                            </span>
+                            <span *ngIf="log.status === 'Optimal'"
+                                style="color: #9ca3af; font-size: 0.75rem; margin-left: 0.5rem;">(Optimal)</span>
+                        </td>
+                        <td class="text-end">
+                            <span class="material-icons">more_vert</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <span>Showing 3 of 124 assets</span>
+            <div class="page-controls">
+                <span class="material-icons" style="font-size: 16px;">chevron_left</span>
+                <span class="material-icons" style="font-size: 16px;">chevron_right</span>
+            </div>
+        </div>
+    </div>
+</div>

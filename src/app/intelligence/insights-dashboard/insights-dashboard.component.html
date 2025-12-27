@@ -1,1 +1,98 @@
-<p>insights-dashboard works!</p>
+<div class="insights-container">
+    <div class="header-section">
+        <div>
+            <h2>Intelligence Insights</h2>
+            <p class="subtitle">Real-time system health monitoring and predictive analytics for Site A.</p>
+        </div>
+        <div class="header-actions">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                System Live
+            </div>
+            <button class="refresh-btn">
+                <span class="material-icons">refresh</span>
+                Refresh Data
+            </button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-section">
+        <div class="kpi-card" *ngFor="let kpi of kpis">
+            <div class="kpi-content">
+                <span class="label">{{ kpi.label }}</span>
+                <div class="value-row">
+                    <span class="value">{{ kpi.value }}</span>
+                    <span class="subtext" [ngClass]="kpi.type">{{ kpi.subtext }}</span>
+                </div>
+                <div class="trend" [ngClass]="kpi.trendType">
+                    <span class="material-icons" *ngIf="kpi.trendType === 'up'">trending_up</span>
+                    <span class="material-icons" *ngIf="kpi.trendType === 'down'">trending_down</span>
+                    <span class="material-icons" *ngIf="kpi.trendType === 'neutral'">remove</span>
+                    {{ kpi.trend }}
+                </div>
+            </div>
+            <div class="kpi-bg-icon">
+                <!-- Using light absolute positioned icon for background graphic effect shown in design -->
+                <span class="material-icons">{{ kpi.icon }}</span>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="section-title">Active Monitor</h3>
+
+    <!-- Active Monitor Grid -->
+    <div class="monitor-grid">
+        <div class="monitor-card" *ngFor="let item of monitors">
+            <div class="card-header">
+                <div class="title-row">
+                    <div class="icon-box" [ngClass]="item.badge.type">
+                        <span class="material-icons">{{ item.icon }}</span>
+                    </div>
+                    <h4>{{ item.title }}</h4>
+                </div>
+                <span class="badge" [ngClass]="item.badge.type">{{ item.badge.text }}</span>
+            </div>
+
+            <div class="card-body">
+                <h5>{{ item.headline }}</h5>
+                <p>{{ item.description }}</p>
+
+                <!-- Dynamic Visuals -->
+                <div class="visual-container" [ngSwitch]="item.visualType" *ngIf="item.visualType !== 'none'">
+
+                    <!-- Bar Chart Mock -->
+                    <div class="bar-chart" *ngSwitchCase="'bar-chart'">
+                        <div class="bar" *ngFor="let height of item.visualData" [style.height.px]="height * 4"
+                            [ngClass]="height > 6 ? 'high' : 'normal'"></div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-container" *ngSwitchCase="'progress-bar'">
+                        <div class="progress-bar-bg">
+                            <div class="progress-fill" [style.width.%]="item.visualData.value"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>Condition</span>
+                            <span class="val">{{ item.visualData.label }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Text Highlight -->
+                    <div class="text-highlight" *ngSwitchCase="'text-highlight'">
+                        <span class="material-icons">{{ item.visualData.icon }}</span>
+                        {{ item.visualData.text }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn-text">{{ item.secondaryAction }}</button>
+                <button class="btn-primary"
+                    [ngClass]="item.badge.type === 'critical' || item.badge.type === 'risk' ? 'btn-brown' : 'btn-brown'">
+                    {{ item.primaryAction }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,104 @@
-<p>technician-list works!</p>
+<div class="tech-list-container">
+    <!-- Header -->
+    <div class="header-section">
+        <div class="header-content">
+            <h2>Technician Command</h2>
+            <p class="subtitle">Manage workforce availability and performance across active sectors.</p>
+        </div>
+
+        <div class="user-profile">
+            <button class="icon-btn"><span class="material-icons">notifications</span></button>
+            <button class="icon-btn"><span class="material-icons">settings</span></button>
+            <div class="profile-info">
+                <div class="name">Commander Ray</div>
+                <div class="role">Shift Lead</div>
+            </div>
+            <div class="avatar-circle"></div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+        <div class="search-wrapper">
+            <span class="material-icons">search</span>
+            <input type="text" placeholder="Search technicians by name or ID..." [(ngModel)]="searchQuery">
+        </div>
+
+        <div class="filter-pills">
+            <button class="pill active"><span class="material-icons">groups</span> All Teams</button>
+            <button class="pill"><span class="material-icons">water_drop</span> Hydraulics</button>
+            <button class="pill"><span class="material-icons">bolt</span> Electrical</button>
+            <button class="pill"><span class="material-icons">build</span> Mechanical</button>
+        </div>
+
+        <div class="right-actions">
+            <button class="icon-btn square"><span class="material-icons">filter_list</span></button>
+            <button class="btn-new">
+                <span class="material-icons">add</span> New Tech
+            </button>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="cards-grid">
+        <div class="tech-card" *ngFor="let tech of technicians" [style.border-left-color]="tech.accentColor">
+            <div class="card-header">
+                <div class="avatar-wrapper">
+                    <img [src]="tech.avatar" alt="Avatar" onerror="this.style.display='none'">
+                    <span class="status-dot" [style.background-color]="getDotColor(tech.statusColor)">
+                    </span>
+                </div>
+                <div class="info">
+                    <h3>{{ tech.name }}</h3>
+                    <div class="role-line">
+                        <span class="material-icons tiny-icon">{{ tech.roleIcon }}</span>
+                        {{ tech.role }}
+                    </div>
+                </div>
+                <button class="more-btn"><span class="material-icons">more_vert</span></button>
+            </div>
+
+            <div class="status-row">
+                <div class="status-col">
+                    <span class="label">Status</span>
+                    <span class="status-badge" [style.background-color]="tech.statusColor"
+                        [style.color]="getStatusTextColor(tech.statusColor)">
+                        {{ tech.status }}
+                    </span>
+                </div>
+                <div class="efficiency-col">
+                    <span class="label">Efficiency</span>
+                    <div class="value-line">
+                        {{ tech.efficiency }}%
+                        <span class="material-icons trend-icon" *ngIf="tech.efficiencyTrend === 'up'">trending_up</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-line" [style.background-color]="tech.accentColor"></div>
+
+            <button class="action-btn">
+                {{ tech.status === 'Available' ? 'Assign Task' :
+                tech.status === 'Offline' ? 'Details' : 'View Profile' }}
+            </button>
+        </div>
+
+        <!-- Recruit New Card -->
+        <div class="recruit-card">
+            <div class="icon-circle">
+                <span class="material-icons">person_add_alt_1</span>
+            </div>
+            <h3>Recruit New</h3>
+            <p>Add to roster</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-pagination">
+        <span class="showing">Showing <strong>1-7</strong> of <strong>48</strong> technicians</span>
+        <div class="pages">
+            <button class="btn-page">Previous</button>
+            <button class="btn-page">Next</button>
+        </div>
+    </div>
+</div>

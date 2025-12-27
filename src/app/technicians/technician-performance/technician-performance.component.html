@@ -1,1 +1,148 @@
-<p>technician-performance works!</p>
+<div class="performance-container">
+    <!-- Header -->
+    <div class="breadcrumbs">
+        <span>Analytics</span> / <span class="current">Technician Performance</span>
+    </div>
+
+    <div class="header-section">
+        <div class="text-content">
+            <h2>Technician Performance Analytics</h2>
+            <p class="subtitle">Monitoring efficiency, repair times, and schedule adherence across the maintenance team.
+            </p>
+        </div>
+        <div class="header-actions">
+            <!-- Filters -->
+            <div class="filter-dropdown">
+                Last 30 Days <span class="material-icons">expand_more</span>
+            </div>
+            <div class="filter-dropdown">
+                Dept: Mechanical <span class="material-icons">expand_more</span>
+            </div>
+            <button class="btn-export">
+                <span class="material-icons">download</span>
+                Export Report
+            </button>
+        </div>
+    </div>
+
+    <!-- KPI Grid -->
+    <div class="kpi-grid">
+        <!-- 1. Efficiency KPI -->
+        <div class="kpi-card efficiency-card">
+            <div class="card-top">
+                <div class="label">{{ efficiencyKPI.label }}</div>
+                <div class="kpi-icon"><span class="material-icons">{{ efficiencyKPI.icon }}</span></div>
+            </div>
+            <div class="main-metric">
+                <span class="value">{{ efficiencyKPI.value }}</span>
+                <span class="trend-badge" [class.up]="efficiencyKPI.trendDirection === 'up'">
+                    <span class="material-icons">trending_up</span> {{ efficiencyKPI.trend }}
+                </span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-fill" [style.width.%]="efficiencyKPI.progressValue"></div>
+            </div>
+            <div class="target-text">{{ efficiencyKPI.targetText }}</div>
+        </div>
+
+        <!-- 2. Repair Time KPI -->
+        <div class="kpi-card repair-card">
+            <div class="card-top">
+                <div class="label">{{ repairTimeKPI.label }}</div>
+                <div class="kpi-icon"><span class="material-icons">{{ repairTimeKPI.icon }}</span></div>
+            </div>
+            <div class="main-metric">
+                <span class="value">{{ repairTimeKPI.value }}</span>
+                <span class="trend-badge" [class.down-good]="repairTimeKPI.trendDirection === 'down'">
+                    <span class="material-icons">arrow_downward</span> {{ repairTimeKPI.trend }}
+                </span>
+            </div>
+            <div class="description-text">{{ repairTimeKPI.description }}</div>
+            <div class="sub-text">{{ repairTimeKPI.trendLabel }}</div>
+        </div>
+
+        <!-- 3. Active Technicians KPI -->
+        <div class="kpi-card active-card">
+            <div class="card-top">
+                <div class="label">{{ techKPI.label }}</div>
+                <div class="kpi-icon person-icon"><span class="material-icons">person_search</span></div>
+            </div>
+            <div class="main-metric">
+                <span class="value">{{ techKPI.value }}</span>
+                <span class="total-text"> / 32 Total</span>
+            </div>
+
+            <!-- Breakdown Dots -->
+            <div class="status-legend">
+                <div class="legend-item" *ngFor="let item of techKPI.breakdown">
+                    <span class="dot" [style.background-color]="item.color"></span>
+                    {{ item.count }} {{ item.label }}
+                </div>
+            </div>
+            <div class="sub-text">{{ techKPI.description }}</div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+        <!-- Donut Chart Card -->
+        <div class="chart-card">
+            <div class="card-header">
+                <h3>Timeliness Breakdown</h3>
+                <span class="material-icons menu-icon">more_horiz</span>
+            </div>
+
+            <div class="donut-chart-wrapper">
+                <!-- CSS Conic Gradient Donut -->
+                <div class="donut-chart">
+                    <div class="center-hole">
+                        <div class="center-value">{{ timelinessData.total }}</div>
+                        <div class="center-label">JOBS CLOSED</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-legend">
+                <div class="legend-row" *ngFor="let item of timelinessData.breakdown">
+                    <div class="left">
+                        <span class="dot" [style.background-color]="item.color"></span>
+                        <span class="label">{{ item.label }}</span>
+                    </div>
+                    <div class="right-percent">{{ item.percent }}%</div>
+                    <!-- Small line bar under? Design shows just row. Actually diagram shows progress bar under each? No, looks like a line. -->
+                    <!-- Wait, looking at image, it has: Dot Label ... Percent. And below each row is a small progress line? -->
+                    <!-- Yes, let's add a small progress line. -->
+                    <div class="row-progress-bar" [style.background-color]="item.color" [style.width.%]="item.percent">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Chart Card -->
+        <div class="chart-card">
+            <div class="card-header">
+                <h3>Top Performers</h3>
+                <button class="btn-text">View Full Report</button>
+            </div>
+            <div class="sub-header">Work orders completed this month</div>
+
+            <div class="bar-chart-metrics">
+                <!-- Y-Axis Grid Lines (Mock visual) -->
+                <div class="grid-lines">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+
+                <div class="bars-container">
+                    <div class="bar-group" *ngFor="let perf of topPerformers">
+                        <!-- Tooltip or value on hover? Image doesn't show values, just bars. -->
+                        <div class="bar-fill" [style.height.%]="perf.value"></div>
+                        <div class="bar-label">{{ perf.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

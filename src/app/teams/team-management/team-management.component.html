@@ -1,1 +1,106 @@
-<p>team-management works!</p>
+<div class="team-container">
+    <div class="header-section">
+        <div class="header-content">
+            <h2>Maintenance Squads</h2>
+            <p class="subtitle">Manage personnel allocation and team structures.</p>
+        </div>
+        <button class="btn-create">
+            <span class="material-icons">add</span>
+            Create New Team
+        </button>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card" *ngFor="let kpi of kpis">
+            <div class="kpi-content">
+                <div class="label">{{ kpi.label }}</div>
+                <div class="value">{{ kpi.value }}</div>
+            </div>
+            <div class="kpi-icon" [style.background-color]="kpi.iconBg" [style.color]="kpi.iconColor">
+                <span class="material-icons">{{ kpi.icon }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teams Table Card -->
+    <div class="content-card">
+        <div class="card-header">
+            <h3>All Teams</h3>
+            <div class="header-actions">
+                <button class="btn-action">
+                    <span class="material-icons">filter_list</span>
+                    Filter
+                </button>
+                <button class="btn-action">
+                    <span class="material-icons">download</span>
+                    Export
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-name">TEAM NAME</th>
+                        <th class="col-members">MEMBER AVATARS</th>
+                        <th class="col-company">COMPANY / DEPARTMENT</th>
+                        <th class="col-actions">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let team of teams">
+                        <td class="col-name">
+                            <div class="name-wrapper">
+                                <div class="letter-icon" [style.background-color]="team.letterBg"
+                                    [style.color]="team.letterColor">
+                                    {{ team.letter }}
+                                </div>
+                                <div class="text-content">
+                                    <div class="title">{{ team.name }}</div>
+                                    <div class="subtitle">{{ team.unit }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-members">
+                            <div class="avatar-stack">
+                                <!-- Loop through first few avatars -->
+                                <div class="avatar" *ngFor="let avatar of team.members.avatars">
+                                    <img [src]="avatar" alt="Member" onerror="this.style.display='none'">
+                                    <!-- Simple fallback circle if img fails - handled by CSS usually or use icon -->
+                                    <span class="fallback-icon material-icons">person</span>
+                                </div>
+                                <!-- Count circle -->
+                                <div class="avatar-count" *ngIf="team.members.count > 0">
+                                    +{{ team.members.count }}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-company">
+                            <div class="text-content">
+                                <div class="title">{{ team.company.name }}</div>
+                                <div class="subtitle">{{ team.company.department }}</div>
+                            </div>
+                        </td>
+                        <td class="col-actions">
+                            <button class="btn-edit">
+                                <span class="material-icons">edit</span>
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer">
+            <span class="showing-text">Showing <strong>1</strong> to <strong>5</strong> of <strong>12</strong>
+                results</span>
+            <div class="pagination">
+                <button class="btn-page">Previous</button>
+                <button class="btn-page">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

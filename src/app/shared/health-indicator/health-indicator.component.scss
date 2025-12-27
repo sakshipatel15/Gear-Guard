@@ -1,0 +1,623 @@
+// Variables - Extracted from Design
+$bg-app: #f8f9fa;
+$bg-card: #ffffff;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-muted: #9ca3af;
+
+// Status Colors (Vibrant & Premium)
+$color-optimal-bg: #ecfdf5; // Green-50
+$color-optimal-text: #059669; // Green-600
+$color-optimal-icon: #10b981; // Green-500
+
+$color-warning-bg: #fffbeb; // Amber-50
+$color-warning-text: #d97706; // Amber-600
+$color-warning-icon: #f59e0b; // Amber-500
+
+$color-critical-bg: #fef2f2; // Red-50
+$color-critical-text: #dc2626; // Red-600
+$color-critical-icon: #ef4444; // Red-500
+
+$color-check-bg: #fef9c3; // Yellow-50
+$color-check-text: #ca8a04; // Yellow-600
+$color-check-icon: #eab308; // Yellow-500
+
+$border-light: #e5e7eb;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+// Global Container
+.health-indicator-container {
+  padding: 3rem;
+  background-color: $bg-app;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: $text-primary;
+}
+
+// Headers
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: $text-muted;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  .documentation-btn {
+    background: #fff;
+    border: 1px solid $border-light;
+    color: $text-primary;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    box-shadow: $shadow-sm;
+    border-radius: 6px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f9fafb;
+      border-color: #d1d5db;
+    }
+  }
+}
+
+// Card Base
+.card-custom {
+  background: $bg-card;
+  border-radius: 16px; // More rounded
+  border: none;
+  box-shadow: $shadow-sm;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px); // Subtle lift
+  }
+}
+
+// BADGES SECTION
+.badge-card {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .badge-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: $text-muted;
+    margin-bottom: 2rem;
+  }
+
+  .status-box {
+    width: 100%;
+    max-width: 240px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    position: relative; // For specific styling if needed
+
+    h3 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      line-height: 1;
+
+      .material-icons {
+        font-size: 1.75rem;
+      }
+    }
+
+    p {
+      margin: 0.5rem 0 0 0;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+  }
+
+  .pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 1rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    background-color: #f3f4f6; // Fallback
+    color: $text-secondary;
+
+    .material-icons {
+      font-size: 16px;
+    }
+  }
+}
+
+// Badge Color Variants
+.badge-optimal {
+  .status-box {
+    background-color: $color-optimal-bg;
+    color: $color-optimal-text;
+    border: 1px solid mix($color-optimal-bg, $color-optimal-text, 90%);
+  }
+
+  .status-box h3 .material-icons {
+    color: $color-optimal-icon;
+  }
+
+  .pill-badge {
+    background-color: $bg-app;
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  // As per bottom pill in image (looks neutral/grey)
+  // Actually image shows bottom pill is also colored or grey? 
+  // Wait, the image bottom pill for Optimal says "98%" with a tick. it looks greyish bg.
+  // For Warning/Critical, the logic below applies.
+}
+
+// Correction based on image:
+// The big box is colored. The bottom pill is GREY background with status icon and text?
+// Image 1 (Optimal): Box Green BG. Pill: Grey BG, Green Icon + Text? No, looks like Grey BG, Black text.
+// Let's look closer. The pill at bottom:
+// Optimal: Grey BG, Green CHECK, Black "98%"
+// Warning: Grey BG, Amber Triangle, Black "74%"
+// Critical: Grey BG, Red Circle, Black "45%"
+// I will adjust the pill badge styles.
+
+.badge-card .pill-badge {
+  background-color: #f3f4f6;
+  color: #374151;
+
+  .material-icons {
+    &.optimal-icon {
+      color: $color-optimal-icon;
+    }
+
+    &.warning-icon {
+      color: $color-warning-icon;
+    }
+
+    &.critical-icon {
+      color: $color-critical-icon;
+    }
+  }
+}
+
+// I need to update HTML to apply specific classes to icons in the pill or use styles.
+// I'll stick to the current SCSS logic but override:
+
+.badge-optimal .pill-badge .material-icons {
+  color: $color-optimal-icon;
+}
+
+.badge-warning .status-box {
+  background: $color-warning-bg;
+  color: $color-warning-text;
+  border: 1px solid mix($color-warning-bg, $color-warning-text, 90%);
+}
+
+.badge-warning .status-box h3 .material-icons {
+  color: $color-warning-icon;
+}
+
+.badge-warning .pill-badge .material-icons {
+  color: $color-warning-icon;
+}
+
+.badge-critical .status-box {
+  background: $color-critical-bg;
+  color: $color-critical-text;
+  border: 1px solid mix($color-critical-bg, $color-critical-text, 90%);
+}
+
+.badge-critical .status-box h3 .material-icons {
+  color: $color-critical-icon;
+}
+
+.badge-critical .pill-badge .material-icons {
+  color: $color-critical-icon;
+}
+
+
+// EQUIPMENT SECTION
+.equipment-card {
+  padding: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center; // Align center vertically
+
+  .equipment-image {
+    width: 200px;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: $shadow-sm;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .equipment-details {
+    flex: 1;
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+
+      h4 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin: 0;
+        color: $text-primary;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: 6px; // Simpler radius
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        &.online {
+          background-color: $color-optimal-bg;
+          color: $color-optimal-text;
+        }
+
+        &.warning {
+          background-color: $color-warning-bg;
+          color: $color-warning-text;
+        }
+      }
+    }
+
+    .location {
+      font-size: 0.85rem;
+      color: $text-muted;
+      margin-bottom: 1.5rem;
+    }
+
+    .health-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 0.75rem;
+
+      >span {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: $text-primary;
+      }
+
+      .score {
+        text-align: right;
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1;
+        color: $text-primary; // Default
+
+        small {
+          display: block;
+          font-size: 0.75rem;
+          color: $text-muted;
+          font-weight: 400;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+
+    .progress {
+      height: 10px;
+      background-color: #f1f5f9;
+      border-radius: 99px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+
+      .progress-bar {
+        border-radius: 99px;
+        transition: width 1s ease-in-out;
+      }
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid $border-light; // No, image doesn't show border. 
+      // Image shows metrics on left, link on right.
+      padding-top: 0.5rem;
+
+      .metrics {
+        display: flex;
+        gap: 2.5rem;
+
+        .metric {
+          .label {
+            display: block;
+            font-size: 0.7rem;
+            color: $text-muted;
+            text-transform: capitalize;
+            margin-bottom: 0.15rem;
+          }
+
+          .value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: $text-primary;
+          }
+        }
+      }
+
+      .action-link {
+        color: $color-warning-text;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: gap 0.2s;
+
+        &:hover {
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+// LOG SECTION
+.log-section {
+  padding: 0; // Reset for table
+
+  .log-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border-light;
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0;
+
+      small {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: $text-muted;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border: none;
+        transition: all 0.2s;
+        cursor: pointer;
+
+        .material-icons {
+          font-size: 1.25rem;
+        }
+      }
+
+      .btn-filter {
+        background: #fff;
+        border: 1px solid $border-light;
+        color: $text-secondary;
+
+        &:hover {
+          background: #f9fafb;
+          color: $text-primary;
+          border-color: #d1d5db;
+        }
+      }
+
+      .btn-add-unit {
+        background-color: $color-warning-icon;
+        color: white;
+        box-shadow: 0 1px 2px 0 rgba(245, 158, 11, 0.5);
+
+        &:hover {
+          background-color: $color-warning-text;
+          box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.4);
+        }
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    th {
+      background: #f9fafb; // Very light grey header
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: $text-muted;
+      padding: 1rem 2rem;
+      text-align: left;
+      border-bottom: 1px solid $border-light;
+
+      &.text-end {
+        text-align: right;
+      }
+    }
+
+    td {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid $border-light;
+      font-size: 0.9rem;
+      color: $text-secondary;
+      vertical-align: middle;
+
+      &.text-end {
+        text-align: right;
+      }
+
+      &:first-child {
+        // Asset Name
+        color: $text-primary;
+        font-weight: 600;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .asset-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .icon-box {
+        width: 44px;
+        height: 44px;
+        background: #f3f4f6;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-secondary;
+      }
+
+      .asset-info {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          display: block;
+        }
+
+        .id {
+          color: $text-muted;
+          font-size: 0.75rem;
+          font-weight: 400;
+          margin-top: 0.15rem;
+        }
+      }
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .status-badge-inline {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background-color: $bg-app; // Fallback
+      margin-left: 0.75rem;
+
+      &.optimal {
+        background: $color-optimal-bg;
+        color: $color-optimal-text;
+      }
+
+      // Just in case
+      &.critical {
+        background: $color-critical-bg;
+        color: $color-critical-text;
+      }
+
+      &.check {
+        background: $color-check-bg;
+        color: $color-check-text;
+      }
+    }
+  }
+
+  .pagination {
+    padding: 1rem 2rem;
+    border-top: 1px solid $border-light;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $text-muted;
+    font-size: 0.85rem;
+
+    .page-controls {
+      display: flex;
+      gap: 1rem;
+
+      .material-icons {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: $text-secondary;
+
+        &:hover {
+          color: $text-primary;
+        }
+      }
+    }
+  }
+}
+
+// Media Queries
+@media (max-width: 992px) {
+  .equipment-card {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .equipment-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .equipment-details {
+      width: 100%;
+    }
+  }
+}

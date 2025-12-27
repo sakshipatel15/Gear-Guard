@@ -1,0 +1,875 @@
+// Variables
+$font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+$text-primary: #111827;
+$text-secondary: #4b5563;
+$text-muted: #9ca3af;
+$bg-app: #f9fafb;
+$bg-card: #ffffff;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-lift: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$border-color: #e5e7eb;
+
+// Brand Colors
+$primary-orange: #ea580c;
+
+.calendar-container {
+    padding: 2.5rem 3.5rem;
+    font-family: $font-stack;
+    background-color: $bg-app;
+    min-height: 100vh;
+    color: $text-primary;
+
+    @media (max-width: 768px) {
+        padding: 1.5rem;
+    }
+}
+
+// Header
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .left {
+        .breadcrumbs {
+            font-size: 0.85rem;
+            color: $text-muted;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.025em;
+            line-height: 1;
+
+            @media (max-width: 768px) {
+                font-size: 1.75rem;
+            }
+        }
+
+        .subtitle {
+            color: $text-secondary;
+            font-size: 1rem;
+            margin: 0;
+        }
+    }
+
+    .right-controls {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+
+        @media (max-width: 640px) {
+            width: 100%;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .date-nav {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 0.35rem;
+            border-radius: 12px;
+            border: 1px solid $border-color;
+            box-shadow: $shadow-sm;
+            transition: box-shadow 0.2s;
+
+            &:hover {
+                box-shadow: $shadow-md;
+            }
+
+            .nav-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: $text-secondary;
+                padding: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px;
+                transition: background 0.2s;
+
+                &:hover {
+                    background: #f3f4f6;
+                    color: $text-primary;
+                }
+            }
+
+            .current-date {
+                font-weight: 700;
+                color: #111827;
+                padding: 0 1.25rem;
+                font-size: 0.95rem;
+                white-space: nowrap;
+            }
+        }
+
+        .view-toggle {
+            display: flex;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid $border-color;
+            box-shadow: $shadow-sm;
+            padding: 0.35rem;
+            overflow-x: auto;
+
+            @media (max-width: 640px) {
+                flex: 1;
+                justify-content: center;
+            }
+
+            button {
+                background: none;
+                border: none;
+                padding: 0.5rem 1.25rem;
+                font-size: 0.9rem;
+                color: $text-secondary;
+                cursor: pointer;
+                border-radius: 8px;
+                font-weight: 600;
+                transition: all 0.2s;
+                white-space: nowrap;
+
+                @media (max-width: 640px) {
+                    padding: 0.5rem 0.75rem;
+                    font-size: 0.8rem;
+                }
+
+                &.active {
+                    background: #ffedd5;
+                    color: #c2410c;
+                }
+
+                &.today {
+                    color: #ea580c;
+
+                    &:hover {
+                        background: #fff7ed;
+                    }
+                }
+
+                &:hover:not(.active) {
+                    background: #f9fafb;
+                    color: $text-primary;
+                }
+            }
+        }
+    }
+}
+
+// KPIs
+.kpi-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+
+    .kpi-card {
+        flex: 1;
+        min-width: 200px; // Ensure cards don't get too squished
+        background: #fff;
+        border-radius: 16px;
+        padding: 1.75rem;
+        box-shadow: $shadow-sm;
+        border-right: 1px solid #f3f4f6;
+        border-top: 1px solid #f3f4f6;
+        border-bottom: 1px solid #f3f4f6;
+        border-left: 5px solid transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        @media (max-width: 640px) {
+            min-width: 100%; // Stack vertically on mobile
+            padding: 1.25rem;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: $shadow-md;
+        }
+
+        .kpi-content {
+            .label {
+                display: block;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: $text-muted;
+                margin-bottom: 0.75rem;
+                letter-spacing: 0.02em;
+                text-transform: uppercase;
+            }
+
+            .value {
+                font-size: 2rem;
+                font-weight: 800;
+                color: #111827;
+                line-height: 1;
+            }
+        }
+
+        .kpi-icon {
+            font-size: 1.75rem;
+            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        &.neutral {
+            border-left-color: #374151;
+
+            .kpi-icon {
+                color: #374151;
+            }
+        }
+
+        &.success {
+            border-left-color: #65a30d;
+
+            .kpi-icon {
+                color: #65a30d;
+                background: #ecfccb;
+            }
+        }
+
+        &.warning {
+            border-left-color: #d97706;
+
+            .kpi-icon {
+                color: #d97706;
+                background: #fffbeb;
+            }
+        }
+
+        &.critical {
+            border-left-color: #dc2626;
+
+            .kpi-icon {
+                color: #dc2626;
+                background: #fee2e2;
+            }
+        }
+    }
+}
+
+// Main Layout
+.main-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap; // Allow wrapping
+
+    .calendar-grid {
+        flex: 3;
+        min-width: 0; // Prevent flex overflow issues
+        width: 100%; // Take full width if wrapped
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: $shadow-md;
+        border: 1px solid rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        .grid-header {
+            display: flex;
+            border-bottom: 1px solid $border-color;
+            background: #fff;
+            min-width: 800px; // Ensure header scrolls with body
+
+            .time-col-header {
+                width: 100px;
+                flex-shrink: 0;
+                padding: 1.25rem;
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: $text-muted;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-right: 1px solid $border-color;
+                background: #f9fafb;
+                position: sticky;
+                left: 0;
+                z-index: 30; // Sticky time header
+            }
+
+            .day-col-header {
+                flex: 1;
+                padding: 1.25rem 0.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-right: 1px solid #f3f4f6;
+                transition: background 0.2s;
+                position: relative;
+
+                .day-name {
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    color: $text-muted;
+                    margin-bottom: 0.25rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                }
+
+                .day-date {
+                    font-size: 1.5rem;
+                    font-weight: 800;
+                    color: #374151;
+                }
+
+                &.active {
+                    background: #fff7ed;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        height: 3px;
+                        background: #ea580c;
+                    }
+
+                    .day-name {
+                        color: #c2410c;
+                    }
+
+                    .day-date {
+                        color: #9a3412;
+                    }
+                }
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+        }
+
+        .grid-body {
+            position: relative;
+            display: flex;
+            flex-grow: 1;
+            min-height: 600px;
+            overflow-x: auto; // Horizontal scrolling
+
+            // Container to ensure content width matches header if wide
+            .scroll-container {
+                display: flex;
+                flex: 1;
+                min-width: 800px;
+                position: relative;
+            }
+
+            .time-column {
+                width: 100px;
+                flex-shrink: 0;
+                border-right: 1px solid $border-color;
+                background: #f9fafb;
+                z-index: 20; // Higher z-index for sticky
+                position: sticky;
+                left: 0; // Sticky time column
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02); // Divider shadow
+
+                .time-slot {
+                    height: 80px;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: center;
+                    padding-top: 0.75rem;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: $text-muted;
+                    position: relative;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        width: 6px;
+                        height: 1px;
+                        background: $border-color;
+                    }
+                }
+            }
+
+            .day-column {
+                flex: 1;
+                border-right: 1px solid #f3f4f6;
+                background-image: linear-gradient(to bottom, #f9fafb 1px, transparent 1px);
+                background-size: 100% 80px;
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+
+            // Events Overlay
+            .event-card {
+                position: absolute;
+                background: #fff;
+                border-left: 4px solid;
+                padding: 0.6rem 0.8rem;
+                border-radius: 6px;
+                box-shadow: $shadow-sm;
+                font-size: 0.8rem;
+                overflow: hidden;
+                transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+                cursor: pointer;
+                z-index: 10;
+                margin-left: 100px + 4px; // Offset
+                width: calc(13% - 8px);
+
+                // Adjust width calculation for scroll context? 
+                // Since we force min-width 800px approx, % logic still holds inside scroll container relative to day cols.
+
+                &:hover {
+                    transform: translateY(-2px) scale(1.02);
+                    box-shadow: $shadow-lg;
+                    z-index: 20;
+                }
+
+                .event-top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 0.35rem;
+
+                    .type-label {
+                        font-size: 0.65rem;
+                        font-weight: 800;
+                        text-transform: uppercase;
+                        letter-spacing: 0.05em;
+                        opacity: 0.9;
+                    }
+
+                    .status-icon {
+                        font-size: 1.1rem;
+                    }
+                }
+
+                .event-title {
+                    font-weight: 700;
+                    color: #111827;
+                    margin-bottom: 0.35rem;
+                    line-height: 1.3;
+                    font-size: 0.85rem;
+                }
+
+                .event-meta {
+                    color: $text-secondary;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                }
+
+                &.normal {
+                    border-left-color: #65a30d;
+                    background: #f7fee7;
+                    border: 1px solid #d9f99d;
+                    border-left-width: 4px;
+
+                    .type-label {
+                        color: #365314;
+                    }
+                }
+
+                &.warning {
+                    border-left-color: #d97706;
+                    background: #fffbeb;
+                    border: 1px solid #fde68a;
+                    border-left-width: 4px;
+
+                    .type-label {
+                        color: #92400e;
+                    }
+
+                    .status-icon {
+                        color: #d97706;
+                    }
+                }
+
+                &.critical {
+                    border-left-color: #dc2626;
+                    background: #fef2f2;
+                    border: 1px solid #fecaca;
+                    border-left-width: 4px;
+
+                    .type-label {
+                        color: #7f1d1d;
+                    }
+
+                    .status-icon {
+                        color: #dc2626;
+                    }
+
+                    .event-title {
+                        color: #991b1b;
+                    }
+                }
+
+                &.routine {
+                    border-left-color: #10b981;
+                    background: #ecfdf5;
+                    border: 1px solid #a7f3d0;
+                    border-left-width: 4px;
+
+                    .type-label {
+                        color: #064e3b;
+                    }
+                }
+            }
+
+            // Current Time Line
+            .current-time-line {
+                position: absolute;
+                left: 100px;
+                right: 0; // Sticky left handled by time-column z-index? No, line needs to scroll.
+                // Wait, if time column is sticky, the line start must account for scroll?
+                // Actually sticking line to left: 100px relative to container works if container scrolls.
+
+                height: 2px;
+                display: flex;
+                align-items: center;
+                z-index: 15;
+                pointer-events: none;
+
+                .time-tag {
+                    position: absolute;
+                    left: -90px;
+                    background: #ea580c;
+                    color: #fff;
+                    padding: 0.15rem 0.5rem;
+                    border-radius: 4px;
+                    font-weight: 700;
+                    font-size: 0.75rem;
+                    box-shadow: $shadow-sm;
+                    // Sticky logic for tag inside scrolling area is hard without JS. 
+                    // Let's assume tag scrolls away with time column if not carefully handled.
+                    // But if .time-column is sticky, it overlays this tag.
+                    z-index: 25; // Above time column?
+
+                    // Actually, let's put the tag inside the time column for stickiness if we could.
+                    // css-only approach: ensure time-tag is fixed relative to view? No.
+                    // Simple fix: Z-index play.
+                }
+
+                .line {
+                    flex: 1;
+                    height: 2px;
+                    background: #ea580c;
+                    opacity: 0.6;
+                    position: relative;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: -1px;
+                        top: -4px;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: #ea580c;
+                        box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.2);
+                        animation: pulse 2s infinite;
+                    }
+                }
+            }
+
+            .shift-break-text {
+                position: absolute;
+                left: 100px;
+                right: 0;
+                text-align: center;
+                color: #9ca3af;
+                font-size: 0.75rem;
+                font-weight: 800;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                background: linear-gradient(90deg, transparent, rgba(243, 244, 246, 0.8), transparent);
+                padding: 0.5rem 0;
+                z-index: 1;
+            }
+        }
+    }
+
+    // Sidebar
+    .sidebar {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        min-width: 320px;
+
+        @media (max-width: 1280px) {
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .widget {
+                flex: 1;
+                min-width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+
+            .widget {
+                width: 100%;
+            }
+        }
+
+        .widget {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: $shadow-sm;
+            border: 1px solid $border-color;
+            transition: box-shadow 0.2s;
+
+            &:hover {
+                box-shadow: $shadow-md;
+            }
+
+            h3 {
+                font-size: 1rem;
+                font-weight: 700;
+                color: #111827;
+                margin: 0 0 1.25rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            // Mini Calendar styling
+            &.mini-calendar {
+                .mini-cal-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1.25rem;
+
+                    span {
+                        font-weight: 700;
+                        font-size: 1rem;
+                        color: #111827;
+                    }
+
+                    .arrows {
+                        display: flex;
+                        gap: 0.25rem;
+                        color: $text-secondary;
+
+                        .material-icons {
+                            font-size: 1.25rem;
+                            cursor: pointer;
+                            padding: 4px;
+                            border-radius: 4px;
+
+                            &:hover {
+                                background: #f3f4f6;
+                                color: #111827;
+                            }
+                        }
+                    }
+                }
+
+                .mini-cal-grid {
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                    gap: 0.5rem;
+                    text-align: center;
+                    font-size: 0.85rem;
+
+                    .dow {
+                        font-weight: 700;
+                        color: #9ca3af;
+                        font-size: 0.75rem;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .day {
+                        width: 32px;
+                        height: 32px;
+                        margin: 0 auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #374151;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        font-weight: 500;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background: #f3f4f6;
+                        }
+
+                        &.text-muted {
+                            color: #e5e7eb;
+                        }
+
+                        &.active-orange {
+                            background: #ea580c;
+                            color: #fff;
+                            font-weight: 700;
+                            box-shadow: 0 4px 6px -1px rgba(234, 88, 12, 0.4);
+                        }
+                    }
+                }
+            }
+
+            // Pending Approval
+            &.pending-approval {
+                .pending-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 1px dashed #f3f4f6;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                        padding-bottom: 0;
+                        border-bottom: none;
+                    }
+
+                    .icon-box {
+                        width: 42px;
+                        height: 42px;
+                        background: #f9fafb;
+                        border-radius: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #6b7280;
+                        border: 1px solid #e5e7eb;
+                    }
+
+                    .info {
+                        flex: 1;
+
+                        .title {
+                            font-weight: 700;
+                            font-size: 0.9rem;
+                            color: #111827;
+                            margin-bottom: 0.1rem;
+                        }
+
+                        .sub {
+                            font-size: 0.75rem;
+                            color: $text-muted;
+                        }
+                    }
+
+                    .review-btn {
+                        background: #fff7ed;
+                        border: none;
+                        color: #c2410c;
+                        padding: 0.4rem 0.8rem;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        font-size: 0.75rem;
+                        cursor: pointer;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background: #ffedd5;
+                        }
+                    }
+                }
+            }
+
+            // Tech Availability
+            &.tech-availability {
+                .tech-row {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    padding: 0.5rem 0.75rem;
+                    border-radius: 8px;
+                    transition: background 0.2s;
+                    cursor: default;
+
+                    &:hover {
+                        background: #f9fafb;
+                    }
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 2px solid #fff;
+                        box-shadow: $shadow-sm;
+                    }
+
+                    .info {
+                        .name {
+                            font-weight: 700;
+                            font-size: 0.9rem;
+                            color: #111827;
+                        }
+
+                        .status {
+                            font-size: 0.75rem;
+                            color: $text-secondary;
+                            display: flex;
+                            align-items: center;
+                            gap: 0.4rem;
+                            font-weight: 500;
+
+                            .dot {
+                                width: 8px;
+                                height: 8px;
+                                border-radius: 50%;
+                                display: inline-block;
+                                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(234, 88, 12, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+    }
+}

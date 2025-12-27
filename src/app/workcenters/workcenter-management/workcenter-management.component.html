@@ -1,1 +1,119 @@
-<p>workcenter-management works!</p>
+<div class="workcenter-container">
+    <div class="header-section">
+        <div>
+            <h2>Work Center Management</h2>
+            <p class="subtitle">Manage operational metrics, capacity, and efficiency for all production units.</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-filter">
+                <span class="material-icons">filter_list</span>
+                Filter
+            </button>
+            <button class="btn-add">
+                <span class="material-icons">add</span>
+                Add Work Center
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <span class="material-icons">search</span>
+        <input type="text" placeholder="Search by name, code, or capacity...">
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="content-card">
+        <!-- Tabs & Sort -->
+        <div class="card-header-controls">
+            <div class="tabs">
+                <div class="tab" [class.active]="activeTab === 'All Centers'" (click)="activeTab = 'All Centers'">All
+                    Centers</div>
+                <div class="tab" [class.active]="activeTab === 'Active'" (click)="activeTab = 'Active'">Active</div>
+                <div class="tab" [class.active]="activeTab === 'Maintenance'" (click)="activeTab = 'Maintenance'">
+                    Maintenance</div>
+            </div>
+            <div class="sort-control">
+                SORT BY: <span class="sort-val">Name (A-Z)</span>
+                <span class="material-icons">expand_more</span>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-name">NAME</th>
+                        <th class="col-code">CODE</th>
+                        <th class="col-cost">COST / HR</th>
+                        <th class="col-capacity">CAPACITY</th>
+                        <th class="col-efficiency">EFFICIENCY</th>
+                        <th class="col-oee">OEE TARGET</th>
+                        <th class="col-action">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let wc of workCenters">
+                        <td class="col-name">
+                            <div class="name-wrapper">
+                                <div class="icon-box" [style.background-color]="wc.iconBg" [style.color]="wc.iconColor">
+                                    <span class="material-icons">{{ wc.icon }}</span>
+                                </div>
+                                <span class="text">{{ wc.name }}</span>
+                            </div>
+                        </td>
+                        <td class="col-code">
+                            <div class="code-box">
+                                {{ wc.code.split('-')[0] }}-<br>{{ wc.code.split('-')[1] }}
+                            </div>
+                        </td>
+                        <td class="col-cost">${{ wc.costPerHr | number:'1.2-2' }}</td>
+                        <td class="col-capacity">
+                            <div class="capacity-box">
+                                <span class="val">{{ wc.capacity }}</span>
+                                <span class="type">{{ wc.capacityType }}</span>
+                            </div>
+                        </td>
+                        <td class="col-efficiency">
+                            <div class="efficiency-wrapper" *ngIf="wc.efficiency !== null; else notTracked">
+                                <div class="eff-value">
+                                    {{ wc.efficiency }}%
+                                    <span class="badge" *ngIf="wc.statusBadge">{{ wc.statusBadge }}</span>
+                                </div>
+                                <div class="progress-bar-bg">
+                                    <div class="progress-fill" [style.width.%]="wc.efficiency"
+                                        [class.orange]="wc.efficiencyStatus === 'good' || wc.efficiencyStatus === 'average'"
+                                        [class.red]="wc.efficiencyStatus === 'poor'"></div>
+                                </div>
+                            </div>
+                            <ng-template #notTracked>
+                                <div class="not-tracked">
+                                    <span class="material-icons">info</span>
+                                    Not tracked
+                                </div>
+                            </ng-template>
+                        </td>
+                        <td class="col-oee">
+                            <span class="oee-val" *ngIf="wc.oeeTarget">{{ wc.oeeTarget }}%</span>
+                            <span class="oee-dash" *ngIf="!wc.oeeTarget">—</span>
+                        </td>
+                        <td class="col-action">
+                            <button class="btn-icon">
+                                <span class="material-icons">more_vert</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer">
+            <span class="showing-text">Showing <strong>1-5</strong> of <strong>24</strong> work centers</span>
+            <div class="pagination">
+                <button class="btn-page">Previous</button>
+                <button class="btn-page">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

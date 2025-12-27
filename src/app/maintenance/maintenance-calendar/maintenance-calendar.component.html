@@ -1,1 +1,165 @@
-<p>maintenance-calendar works!</p>
+<div class="calendar-container">
+    <!-- Header -->
+    <div class="header-section">
+        <div class="left">
+            <div class="breadcrumbs">Home / Maintenance Schedule</div>
+            <h1>Maintenance Calendar</h1>
+            <p class="subtitle">Overview of scheduled maintenance tasks for Week 42, Oct 2023</p>
+        </div>
+        <div class="right-controls">
+            <div class="date-nav">
+                <button class="nav-btn"><span class="material-icons">chevron_left</span></button>
+                <span class="current-date">October 2023</span>
+                <button class="nav-btn"><span class="material-icons">chevron_right</span></button>
+            </div>
+            <div class="view-toggle">
+                <button>Day</button>
+                <button class="active">Week</button>
+                <button>Month</button>
+                <button class="today">Today</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+        <div class="kpi-card" *ngFor="let kpi of kpis" [ngClass]="kpi.colorClass">
+            <div class="kpi-content">
+                <span class="label">{{ kpi.label }}</span>
+                <div class="value">{{ kpi.value }}</div>
+            </div>
+            <span class="material-icons kpi-icon">{{ kpi.icon }}</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-layout">
+        <!-- Calendar Grid -->
+        <div class="calendar-grid">
+            <!-- Header Row -->
+            <div class="grid-header">
+                <div class="time-col-header">TIME (GMT-5)</div>
+                <div class="day-col-header" *ngFor="let day of weekDays" [class.active]="day.active">
+                    <span class="day-name">{{ day.name }}</span>
+                    <span class="day-date">{{ day.date }}</span>
+                </div>
+            </div>
+
+            <!-- Body Grid -->
+            <div class="grid-body">
+                <!-- Time Column -->
+                <div class="time-column">
+                    <div class="time-slot" *ngFor="let time of timeSlots">
+                        {{ time }}
+                    </div>
+                </div>
+
+                <!-- Day Columns with Events -->
+                <!-- Note: In a real app we'd map events to slots/grid positions. 
+                     For this design match, we'll use absolute positioning or CSS Grid placement based on data -->
+                <div class="day-column" *ngFor="let day of weekDays">
+                    <!-- Grid Lines for time slots -->
+                    <div class="grid-cell" *ngFor="let time of timeSlots"></div>
+                </div>
+
+                <!-- Overlay Events using absolute positioning relative to grid-body -->
+                <!-- 8:00 AM is top 0. Each hour slot approx 80px height -->
+                <div class="event-card" *ngFor="let event of events" [ngClass]="event.colorClass"
+                    [style.left.px]="(event.day - 16) * 14.28 + '%'" [style.top.px]="(event.startHour - 8) * 80"
+                    [style.height.px]="event.duration * 80" [style.width.%]="13"> <!-- Width approx 1/7 - gap -->
+
+                    <div class="event-top">
+                        <span class="type-label">{{ event.typeLabel }}</span>
+                        <span class="material-icons status-icon" *ngIf="event.type === 'Warning'">warning</span>
+                        <span class="material-icons status-icon" *ngIf="event.type === 'Critical'">error_outline</span>
+                    </div>
+                    <div class="event-title">{{ event.title }}</div>
+                    <div class="event-meta" *ngIf="event.meta">{{ event.meta }}</div>
+                    <div class="event-meta" *ngIf="event.location && !event.meta">{{ event.location }}</div>
+                </div>
+
+                <!-- Current Time Line (Static at 11:30 AM) -->
+                <!-- 11:30 is 3.5 hours from 8:00 (3.5 * 80 = 280px) -->
+                <div class="current-time-line" style="top: 280px;">
+                    <span class="time-tag">11:30 AM</span>
+                    <div class="line"></div>
+                </div>
+
+                <!-- Shift Break Text (Static at 12:00 PM) -->
+                <div class="shift-break-text" style="top: 350px;">SHIFT BREAK</div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Mini Calendar Widget -->
+            <div class="widget mini-calendar">
+                <div class="mini-cal-header">
+                    <span>October 2023</span>
+                    <div class="arrows">
+                        <span class="material-icons">chevron_left</span>
+                        <span class="material-icons">chevron_right</span>
+                    </div>
+                </div>
+                <div class="mini-cal-grid">
+                    <div class="dow">S</div>
+                    <div class="dow">M</div>
+                    <div class="dow">T</div>
+                    <div class="dow">W</div>
+                    <div class="dow">T</div>
+                    <div class="dow">F</div>
+                    <div class="dow">S</div>
+                    <!-- Mock Days -->
+                    <span class="day text-muted">1</span><span class="day text-muted">2</span><span
+                        class="day text-muted">3</span><span class="day text-muted">4</span><span
+                        class="day text-muted">5</span><span class="day text-muted">6</span><span
+                        class="day text-muted">7</span>
+                    <span class="day">8</span><span class="day">9</span><span class="day">10</span><span
+                        class="day">11</span><span class="day">12</span><span class="day">13</span><span
+                        class="day">14</span>
+                    <span class="day">15</span><span class="day">16</span><span class="day">17</span><span
+                        class="day active-orange">18</span><span class="day">19</span><span class="day">20</span><span
+                        class="day">21</span>
+                    <span class="day">22</span><span class="day">23</span><span class="day">24</span><span
+                        class="day">25</span><span class="day">26</span><span class="day">27</span><span
+                        class="day">28</span>
+                    <span class="day">29</span><span class="day">30</span><span class="day">31</span><span
+                        class="day text-muted">1</span><span class="day text-muted">2</span><span
+                        class="day text-muted">3</span><span class="day text-muted">4</span>
+                </div>
+            </div>
+
+            <!-- Pending Approval -->
+            <div class="widget pending-approval">
+                <h3>Pending Approval</h3>
+                <div class="pending-item" *ngFor="let item of pendingItems">
+                    <div class="icon-box">
+                        <span class="material-icons">{{ item.typeIcon === 'forklift' ? 'local_shipping' : item.typeIcon
+                            }}</span>
+                    </div>
+                    <div class="info">
+                        <div class="title">{{ item.title }}</div>
+                        <div class="sub">{{ item.requester }}</div>
+                    </div>
+                    <button class="review-btn">Review</button>
+                </div>
+            </div>
+
+            <!-- Technician Availability -->
+            <div class="widget tech-availability">
+                <h3>Technician Availability</h3>
+                <div class="tech-row" *ngFor="let tech of technicians">
+                    <img [src]="tech.avatar" alt="Avatar" onerror="this.style.display='none'">
+                    <!-- Fallback if img missing -->
+                    <div class="info">
+                        <div class="name">{{ tech.name }}</div>
+                        <div class="status">
+                            <span class="dot" [style.background-color]="tech.statusColor"></span>
+                            {{ tech.status }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,110 @@
-<p>recommendations works!</p>
+<div class="maintenance-container">
+    <div class="header-section">
+        <div>
+            <h2>Maintenance Actions</h2>
+            <p class="subtitle">Prioritized insights based on real-time sensor data analysis.</p>
+        </div>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SYSTEM LIVE
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card" *ngFor="let kpi of kpis">
+            <div class="kpi-header">
+                <span class="label">{{ kpi.label }}</span>
+                <span class="material-icons" [ngClass]="kpi.type">{{ kpi.icon }}</span>
+            </div>
+            <div class="kpi-value" [ngClass]="kpi.type">{{ kpi.value }}</div>
+            <div class="kpi-subtext">{{ kpi.subtext }}</div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+        <div class="filters">
+            <div class="filter-dropdown">
+                Severity: All
+                <span class="material-icons">arrow_drop_down</span>
+            </div>
+            <div class="filter-dropdown">
+                Equipment Type
+                <span class="material-icons">arrow_drop_down</span>
+            </div>
+            <div class="filter-dropdown">
+                Date Range
+                <span class="material-icons">calendar_today</span>
+            </div>
+        </div>
+        <button class="refresh-btn">
+            <span class="material-icons">refresh</span>
+            Refresh Data
+        </button>
+    </div>
+
+    <!-- Actions List -->
+    <div class="actions-list">
+        <div class="action-card" *ngFor="let action of actions" [ngClass]="action.type">
+            <div class="card-left-border"></div>
+            <div class="card-content">
+                <div class="icon-section">
+                    <div class="icon-circle" [ngClass]="action.type">
+                        <span class="material-icons">{{ action.icon }}</span>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-header">
+                        <h3>{{ action.title }}</h3>
+                        <span class="badge" [ngClass]="action.badge.type">{{ action.badge.text }}</span>
+                    </div>
+                    <p class="description">{{ action.description }}</p>
+                    <div class="meta-info">
+                        <span class="time">
+                            <span class="material-icons">schedule</span>
+                            {{ action.detectedTime }}
+                        </span>
+                        <span class="team" *ngIf="action.team">
+                            <span class="material-icons">group</span>
+                            {{ action.team }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="actions-section">
+                    <button class="btn btn-secondary" *ngIf="action.secondaryAction">
+                        {{ action.secondaryAction }}
+                    </button>
+                    <button class="btn btn-primary"
+                        [ngClass]="action.type === 'critical' || action.type === 'warning' ? 'btn-orange' : 'btn-white'">
+                        <!-- Wait, 'btn-white' for Apply Settings? No, image has Green Check + Apply Settings generic Button look? 
+                             Or pure white with green text? Image:
+                             Critical: Orange Filled.
+                             Warning: Light Orange/Beige Filled.
+                             Optimization: White with Green Text? or Light Green? 
+                             Let's check Image again.
+                             HVAC System (Optimization): Button is White (or very light grey) with Green Check Icon + "Apply Settings" in Green Text. 
+                             
+                             I will handle this in SCSS via classes.
+                             The button text is dynamic. 
+                        -->
+                        <span class="material-icons" *ngIf="action.type === 'critical' || action.type === 'warning'">
+                            <!-- Image shows specific icons on buttons: 
+                                 P-101: "Create Work Order" with + icon (add_task)
+                                 Unit-4: "Emergency Stop & Review" with block icon? (block)
+                                 M-3: "Schedule Inspection" (no icon? just text? looks centered)
+                                 HVAC: "Apply Settings" with check icon (check)
+                            -->
+                            {{ action.primaryAction === 'Create Work Order' ? 'add_task' :
+                            (action.primaryAction.includes('Stop') ? 'block' : '') }}
+                        </span>
+                        <span class="material-icons" *ngIf="action.type === 'success'">check</span>
+                        {{ action.primaryAction }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
