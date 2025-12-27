@@ -1,0 +1,145 @@
+.access-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #F3F4F6; // Light gray match
+    font-family: 'Inter', sans-serif; // Or system-ui
+    padding: 1rem;
+}
+
+.access-card {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 8px; // Slightly less rounded for industrial feel
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.05); // Subtle shadow
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    text-align: center;
+}
+
+.card-header {
+    background-color: #FEF2F2; // Light red bg
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid #FEE2E2;
+
+    .icon-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        background-color: #FEE2E2;
+        color: #DC2626; // Red 600
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+
+        .alert-icon {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 800; // Bold industrial
+        color: #991B1B; // Dark red
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.025em;
+        text-transform: uppercase;
+    }
+
+    p {
+        color: #7F1D1D;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+}
+
+.card-body {
+    padding: 2rem;
+
+    p {
+        color: #4B5563;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin: 0 0 1.5rem;
+    }
+
+    .status-display {
+        background-color: #111827; // Dark almost black
+        color: #10B981; // Terminal green text
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace; // Monospace for code
+        font-size: 0.875rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .label {
+            opacity: 0.7;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+    }
+}
+
+.card-footer {
+    padding: 0 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .action-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background-color: #1F2937; // Dark gray button
+        color: white;
+        border: none;
+        border-radius: 4px; // Squarer button
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+
+        &:hover {
+            background-color: #111827;
+        }
+
+        &.secondary {
+            background-color: white;
+            color: #4B5563;
+            border: 1px solid #D1D5DB;
+
+            &:hover {
+                background-color: #F9FAFB;
+                border-color: #9CA3AF;
+            }
+        }
+    }
+}
+
+.system-footer {
+    background-color: #111827;
+    color: #6B7280;
+    font-size: 0.7rem;
+    padding: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid #DC2626; // Red accent line
+}
