@@ -20,5 +20,9 @@ export const routes: Routes = [
     {
         path: 'maintenance-form',
         component: MaintenanceFormComponent
+    },
+    {
+        path: 'equipment-list',
+        loadComponent: () => import('./equipment/equipment-list/equipment-list.component').then(m => m.EquipmentListComponent)
     }
 ];

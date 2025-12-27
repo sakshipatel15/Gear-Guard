@@ -1,0 +1,82 @@
+// Variables
+$primary-orange: #c27d28;
+$bg-operational: #e6f4ea;
+$text-operational: #137333;
+$bg-maintenance: #fef7e0;
+$text-maintenance: #b45309;
+$bg-offline: #fce8e6;
+$text-offline: #c5221f;
+$bg-inspection: #ffedd5;
+$text-inspection: #9a3412;
+
+.card {
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+// Custom Badge Colors
+.bg-success-subtle {
+    background-color: $bg-operational !important;
+    color: $text-operational !important;
+    border-color: darken($bg-operational, 5%) !important;
+}
+
+.bg-warning-subtle { // Maintenance
+    background-color: $bg-maintenance !important;
+    color: $text-maintenance !important;
+    border-color: darken($bg-maintenance, 5%) !important; 
+}
+
+.bg-danger-subtle {
+    background-color: $bg-offline !important;
+    color: $text-offline !important;
+    border-color: darken($bg-offline, 5%) !important;
+}
+
+.bg-inspection-subtle {
+    background-color: $bg-inspection !important; 
+    color: $text-inspection !important;
+    border-color: darken($bg-inspection, 5%) !important;
+}
+
+// Health Dot
+.health-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    
+    &.text-success { background-color: $text-operational; }
+    &.text-warning { background-color: #f59e0b; }
+    &.text-danger { background-color: $text-offline; }
+}
+
+// Orange Button
+.custom-orange-btn {
+  background-color: $primary-orange !important;
+  border-color: $primary-orange !important;
+  
+   &:hover {
+    opacity: 0.9;
+  }
+}
+
+// Input Focus Override
+.form-control:focus, .btn-white:focus, .form-select:focus {
+    border-color: $primary-orange;
+    box-shadow: 0 0 0 0.25rem rgba($primary-orange, 0.1);
+}
+
+// Table Styling
+.table > :not(caption) > * > * {
+    border-bottom-width: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+tbody tr {
+    transition: background-color 0.2s;
+    &:hover {
+        background-color: #f9fafb;
+    }
+}
