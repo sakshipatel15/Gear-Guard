@@ -1,0 +1,81 @@
+// Variables
+$primary-orange: #c27d28;
+$text-secondary: #6c757d;
+
+.card {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    transition: all 0.2s ease;
+}
+
+// Summary Cards
+.display-5 {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+}
+
+// Custom Orange Button
+.custom-orange-btn {
+  background-color: $primary-orange !important;
+  border-color: $primary-orange !important;
+  
+   &:hover {
+    opacity: 0.9;
+  }
+}
+
+// Severity Badges Custom Colors
+.bg-danger-subtle {
+    background-color: #fce8e6 !important;
+    color: #c5221f !important;
+    border-color: #fad2cf !important;
+}
+
+.bg-warning-subtle {
+    background-color: #fef7e0 !important;
+    color: #b45309 !important;
+    border-color: #feefc3 !important;
+}
+
+.text-warning {
+    color: #b45309 !important; // Darker orange for text
+}
+
+// Table Styling
+.table > :not(caption) > * > * {
+    border-bottom-width: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+tbody tr {
+    transition: background-color 0.2s;
+    &:hover {
+        background-color: #f9fafb;
+    }
+}
+
+// Button styles (White buttons)
+.btn-white {
+    background-color: #fff;
+    border-color: #dee2e6;
+    color: #495057;
+
+    &:hover {
+        background-color: #f8f9fa;
+        border-color: #caced1;
+    }
+}
+
+// Dot for status
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+// Faded icon circle
+.icon-circle {
+    background-color: rgba(255, 247, 237, 0.5); // very light orange
+    color: #f59e0b; 
+}

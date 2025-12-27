@@ -28,5 +28,9 @@ export const routes: Routes = [
     {
         path: 'kanban-board',
         loadComponent: () => import('./maintenance/kanban-board/kanban-board.component').then(m => m.KanbanBoardComponent)
+    },
+    {
+        path: 'escalation-monitor',
+        loadComponent: () => import('./maintenance/escalation-view/escalation-view.component').then(m => m.EscalationViewComponent)
     }
 ];

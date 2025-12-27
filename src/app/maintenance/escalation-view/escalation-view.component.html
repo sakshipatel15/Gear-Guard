@@ -1,1 +1,144 @@
-<p>escalation-view works!</p>
+<div class="container-fluid px-4 py-4 min-vh-100 bg-light">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Escalation Monitoring</h2>
+            <p class="text-muted mb-0">Real-time oversight of maintenance issues requiring immediate attention</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button
+                class="btn btn-white bg-white border shadow-sm d-flex align-items-center gap-2 fw-semibold px-3 text-dark">
+                <span class="material-icons" style="font-size: 18px;">download</span> Export Report
+            </button>
+            <button class="btn btn-warning text-white d-flex align-items-center gap-2 fw-bold px-3 custom-orange-btn">
+                <span class="material-icons" style="font-size: 18px;">add</span> New Escalation
+            </button>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4" *ngFor="let card of summaryCards">
+            <div
+                class="card border-0 shadow-sm p-4 h-100 d-flex flex-row justify-content-between align-items-center rounded-4">
+                <div>
+                    <div class="text-muted small fw-medium mb-1">{{ card.title }}</div>
+                    <div class="d-flex align-items-baseline gap-2">
+                        <h1 class="fw-bold mb-0 text-dark display-5">{{ card.value }}</h1>
+                        <span class="badge rounded-pill fw-bold d-flex align-items-center px-2 py-1"
+                            [ngClass]="getTrendClass(card.trendColor)" style="font-size: 0.75rem;">
+                            <span class="material-icons me-1" style="font-size: 14px;"
+                                *ngIf="card.trendDirection === 'up'">trending_up</span>
+                            <span class="material-icons me-1" style="font-size: 14px;"
+                                *ngIf="card.trendDirection === 'down'">trending_down</span>
+                            {{ card.trend }}
+                        </span>
+                    </div>
+                </div>
+                <div class="icon-circle bg-light text-warning d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 64px; height: 64px; opacity: 0.2;">
+                    <!-- Faded big icon shim -->
+                    <span class="material-icons" style="font-size: 40px;">{{ card.icon }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex gap-2">
+            <button class="btn btn-dark fw-medium px-3 rounded-pill d-flex align-items-center gap-2 shadow-sm">
+                <span class="material-icons" style="font-size: 18px;">list</span> All
+            </button>
+            <button
+                class="btn btn-white bg-white border border-light-subtle text-danger fw-medium px-3 rounded-pill shadow-sm d-flex align-items-center gap-2">
+                <span class="material-icons" style="font-size: 18px;">error</span> Critical (3)
+            </button>
+            <button
+                class="btn btn-white bg-white border border-light-subtle text-warning fw-medium px-3 rounded-pill shadow-sm d-flex align-items-center gap-2">
+                <span class="material-icons" style="font-size: 18px;">warning</span> Warning (5)
+            </button>
+            <button
+                class="btn btn-white bg-white border border-light-subtle text-secondary fw-medium px-3 rounded-pill shadow-sm d-flex align-items-center gap-2">
+                <span class="material-icons" style="font-size: 18px;">check_circle</span> Routine
+            </button>
+        </div>
+        <button class="btn btn-link text-muted text-decoration-none d-flex align-items-center gap-1">
+            <span class="material-icons" style="font-size: 18px;">filter_list</span> Filter
+        </button>
+    </div>
+
+    <!-- Table -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4 py-3 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px; width: 15%;">Severity</th>
+                        <th class="py-3 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px; width: 25%;">Escalation Details</th>
+                        <th class="py-3 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px; width: 20%;">Equipment</th>
+                        <th class="py-3 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px; width: 20%;">Responsible</th>
+                        <th class="py-3 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px; width: 10%;">Time</th>
+                        <th class="py-3 text-end pe-4 text-uppercase text-secondary small fw-semibold"
+                            style="letter-spacing: 0.5px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of escalationList" class="border-bottom text-muted">
+                        <td class="ps-4 py-4">
+                            <span class="badge border rounded-1 px-3 py-2 fw-bold d-flex align-items-center gap-2"
+                                [ngClass]="getSeverityClass(item.severity)" style="width: fit-content;">
+                                <span class="dot" style="width: 6px; height: 6px; border-radius: 50%;"
+                                    [ngClass]="{'bg-danger': item.severity==='CRITICAL', 'bg-warning': item.severity==='WARNING', 'bg-secondary': item.severity==='ROUTINE'}"></span>
+                                {{ item.severity }}
+                            </span>
+                        </td>
+                        <td class="py-4">
+                            <div class="fw-bold text-dark">{{ item.title }}</div>
+                            <div class="small text-muted">ID: {{ item.id }}</div>
+                        </td>
+                        <td class="py-4">
+                            <div class="d-flex align-items-center gap-2 text-dark fw-medium">
+                                <span class="material-icons text-muted" style="font-size: 18px;">{{ item.equipment.icon
+                                    }}</span>
+                                {{ item.equipment.name }}
+                            </div>
+                        </td>
+                        <td class="py-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <img [src]="item.responsible.avatar" class="rounded-circle" width="32" height="32"
+                                    alt="Resp">
+                                <span class="text-dark fw-medium">{{ item.responsible.name }}</span>
+                            </div>
+                        </td>
+                        <td class="py-4">
+                            <span class="fw-bold small" [ngClass]="item.timeColor">{{ item.time }}</span>
+                        </td>
+                        <td class="py-4 text-end pe-4">
+                            <button class="btn btn-link text-muted p-0 text-decoration-none">
+                                <span class="material-icons">more_vert</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+            <span class="text-muted small">Showing <span class="fw-bold text-dark">1-5</span> of <span
+                    class="fw-bold text-dark">12</span> escalations</span>
+            <div class="d-flex gap-2">
+                <button class="btn btn-white border shadow-sm px-3 py-1 small text-muted">Previous</button>
+                <button class="btn btn-white border shadow-sm px-3 py-1 small text-muted">Next</button>
+            </div>
+        </div>
+    </div>
+
+</div>
