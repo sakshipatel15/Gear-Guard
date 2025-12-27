@@ -54,7 +54,7 @@ $green-status: #10B981;
         flex-shrink: 0; // Prevent shrinking
 
         // Hide brand icon on larger screens (sidebar present)
-        @media (min-width: 1024px) {
+        @media (min-width: 1025px) {
             display: none;
         }
 
@@ -71,7 +71,7 @@ $green-status: #10B981;
         line-height: 1.2;
 
         // Hide brand text on larger screens where sidebar is present
-        @media (min-width: 1024px) {
+        @media (min-width: 1025px) {
             display: none;
         }
 
