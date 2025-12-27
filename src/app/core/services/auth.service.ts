@@ -7,6 +7,8 @@ export interface User {
   role: string;
   avatar: string;
   email: string;
+  department?: string;
+  status?: string;
 }
 
 @Injectable({

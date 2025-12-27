@@ -1,60 +1,82 @@
 <div class="modal-backdrop" (click)="authService.closeProfile()">
     <div class="profile-card" (click)="$event.stopPropagation()">
-        <button class="btn-close" (click)="authService.closeProfile()">
-            <span class="material-icons">close</span>
-        </button>
-        <button class="btn-edit" *ngIf="!isEditing()" (click)="startEdit()">
-            <span class="material-icons">edit</span>
-        </button>
 
-        <div class="card-header">
+        <!-- Left Panel: Visual Identity -->
+        <div class="left-panel">
             <div class="avatar-wrapper">
-                <div class="avatar-initial">{{ authService.currentUser()?.name?.charAt(0) }}</div>
+                <ng-container *ngIf="authService.currentUser()?.avatar?.includes('http'); else initial">
+                    <img [src]="authService.currentUser()?.avatar" alt="Avatar">
+                </ng-container>
+                <ng-template #initial>
+                    <div class="avatar-initial">{{ authService.currentUser()?.name?.charAt(0) }}</div>
+                </ng-template>
             </div>
-            <h2 *ngIf="!isEditing()">{{ authService.currentUser()?.name }}</h2>
-            <div *ngIf="isEditing()" class="edit-input-group">
-                <input type="text" [(ngModel)]="editData.name" placeholder="Full Name" class="form-input">
-            </div>
-            <span class="role-badge">{{ authService.currentUser()?.role }}</span>
+            <h2>{{ authService.currentUser()?.name }}</h2>
+            <div class="role-badge">{{ authService.currentUser()?.role || 'User' }}</div>
         </div>
 
-        <div class="card-body">
-            <div class="info-group">
-                <label>Email Address</label>
-                <div class="value">{{ authService.currentUser()?.email }}</div>
-            </div>
-
-            <div class="info-group">
-                <label>Department</label>
-                <div class="value" *ngIf="!isEditing()">{{ 'Engineering' }}</div> <!-- Placeholder for now -->
-                <input *ngIf="isEditing()" type="text" [(ngModel)]="editData.department" placeholder="Department"
-                    class="form-input">
-            </div>
-
-            <div class="info-group">
-                <label>User ID</label>
-                <div class="value id-value">{{ authService.currentUser()?.id }}</div>
-            </div>
-
-            <div class="info-group">
-                <label>Status</label>
-                <div class="value status-active">
-                    <span class="dot"></span> Active
-                </div>
-            </div>
-        </div>
-
-        <div class="card-footer">
-            <div class="edit-actions" *ngIf="isEditing()">
-                <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
-                <button class="btn-save" (click)="saveProfile()" [disabled]="isLoading()">
-                    {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+        <!-- Right Panel: Details & Actions -->
+        <div class="right-panel">
+            <div class="header-actions">
+                <button class="btn-icon" *ngIf="!isEditing()" (click)="startEdit()" title="Edit Profile">
+                    <span class="material-icons">edit</span>
+                </button>
+                <button class="btn-icon close" (click)="authService.closeProfile()" title="Close">
+                    <span class="material-icons">close</span>
                 </button>
             </div>
-            <button class="btn-logout" *ngIf="!isEditing()" (click)="authService.initiateLogout()">
-                <span class="material-icons">logout</span>
-                Logout
-            </button>
+
+            <h3>{{ isEditing() ? 'Edit Profile' : 'Personal Information' }}</h3>
+
+            <div class="grid-form">
+                <div class="info-group full-width">
+                    <label>Full Name</label>
+                    <div class="value" *ngIf="!isEditing()">{{ authService.currentUser()?.name }}</div>
+                    <input *ngIf="isEditing()" type="text" [(ngModel)]="editData.name" class="form-input">
+                </div>
+
+                <div class="info-group">
+                    <label>Email Address</label>
+                    <div class="value">{{ authService.currentUser()?.email }}</div>
+                </div>
+
+                <div class="info-group">
+                    <label>User ID</label>
+                    <div class="value" style="font-family: monospace; font-size: 0.9em;">
+                        {{ authService.currentUser()?.id?.split('-')?.[0] }}...
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <label>Department</label>
+                    <div class="value" *ngIf="!isEditing()">{{ authService.currentUser()?.department || 'Unassigned' }}
+                    </div>
+                    <input *ngIf="isEditing()" type="text" [(ngModel)]="editData.department" class="form-input">
+                </div>
+
+                <div class="info-group">
+                    <label>Status</label>
+                    <div class="value" style="color: #059669; display: flex; align-items: center; gap: 6px;">
+                        <span
+                            style="display:block; width:8px; height:8px; background:#059669; border-radius:50%;"></span>
+                        {{ authService.currentUser()?.status || 'Active' }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-actions">
+                <ng-container *ngIf="isEditing(); else viewActions">
+                    <button class="btn-danger-ghost" (click)="cancelEdit()">Cancel</button>
+                    <button class="btn-primary" (click)="saveProfile()" [disabled]="isLoading()">
+                        {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+                    </button>
+                </ng-container>
+                <ng-template #viewActions>
+                    <button class="btn-danger-ghost" (click)="authService.initiateLogout()">
+                        Sign Out
+                    </button>
+                </ng-template>
+            </div>
         </div>
     </div>
 </div>

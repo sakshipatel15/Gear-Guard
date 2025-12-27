@@ -71,7 +71,9 @@ export class LoginComponent {
                 name: profile.full_name || data.user.email?.split('@')[0] || 'User',
                 email: data.user.email!,
                 role: profile.role || 'Operator',
-                avatar: profile.avatar_url || `https://ui-avatars.com/api/?name=${profile.full_name || 'User'}&background=random`
+                avatar: profile.avatar_url || `https://ui-avatars.com/api/?name=${profile.full_name || 'User'}&background=random`,
+                department: profile.department || 'General',
+                status: profile.status || 'Active'
               });
             }, 1000);
           } else {
@@ -111,7 +113,9 @@ export class LoginComponent {
             name: profile.full_name,
             email: user.email!,
             role: profile.role,
-            avatar: `https://ui-avatars.com/api/?name=${profile.full_name}&background=random`
+            avatar: `https://ui-avatars.com/api/?name=${profile.full_name}&background=random`,
+            department: profile.department,
+            status: profile.status || 'Active'
           });
         }, 1000);
       },

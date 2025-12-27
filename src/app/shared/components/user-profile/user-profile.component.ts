@@ -29,7 +29,7 @@ export class UserProfileComponent {
         if (user) {
             this.editData = {
                 name: user.name,
-                department: 'Engineering' // Default or fetch real if available in Session
+                department: user.department || ''
             };
             this.isEditing.set(true);
         }
@@ -52,7 +52,8 @@ export class UserProfileComponent {
                 // Update local session
                 this.authService.setSession({
                     ...user,
-                    name: this.editData.name
+                    name: this.editData.name,
+                    department: this.editData.department
                 });
                 this.isEditing.set(false);
                 this.isLoading.set(false);
