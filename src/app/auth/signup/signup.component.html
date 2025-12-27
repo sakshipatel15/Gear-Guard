@@ -1,1 +1,171 @@
-<p>signup works!</p>
+<div class="signup-container">
+    <div class="signup-card">
+        <div class="card-header">
+            <div class="logo-container">
+                <!-- Factory Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="factory-icon">
+                    <path d="M11 20H6v-8l-4 4V7l4-2v5l3-3v13zm9 0h-5v-6l-3 3v-9l3 3v-7l5 5v11z" />
+                    <path d="M22 22H2v-2h20v2z" opacity=".3" />
+                    <!-- Simple factory representation -->
+                    <path d="M4 18v-7.8l-2 2V20h20v-8.8l-2-2V18H4z" fill="none" />
+                    <path d="M12 7V3H2v18h20V7H12zM6 19H4v-7l2-2v9zm6 0H8v-9l2-2v11zm6 0h-2v-7l2-2v9z" />
+                </svg>
+            </div>
+            <h2>Create Account</h2>
+            <p>Register your terminal for the Industrial Command System.</p>
+        </div>
+
+        <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="fullName" formControlName="fullName" placeholder="ex. John Doe">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Work Email</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <!-- Envelope Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18"
+                            height="18">
+                            <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                        </svg>
+                    </span>
+                    <input type="email" id="email" formControlName="email" placeholder="name@company.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <!-- Lock Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18"
+                            height="18">
+                            <path
+                                d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                        </svg>
+                    </span>
+                    <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                        placeholder="••••••••">
+                    <span class="input-action-icon" (click)="togglePassword()">
+                        <!-- Eye Icon (Slash handling) -->
+                        <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor" width="18" height="18">
+                            <path
+                                d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
+                        </svg>
+                        <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor" width="18" height="18">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-1.34-3-3-1.34-3-3-1.34-3-3-1.34-3-3-3z" />
+                        </svg>
+                    </span>
+                </div>
+                <!-- Password Strength Meter -->
+                <div class="password-strength">
+                    <div class="strength-bar" [style.background-color]="strengthScore >= 1 ? strengthColor : '#E5E7EB'">
+                    </div>
+                    <div class="strength-bar" [style.background-color]="strengthScore >= 2 ? strengthColor : '#E5E7EB'">
+                    </div>
+                    <div class="strength-bar" [style.background-color]="strengthScore >= 3 ? strengthColor : '#E5E7EB'">
+                    </div>
+                    <div class="strength-bar" [style.background-color]="strengthScore >= 4 ? strengthColor : '#E5E7EB'">
+                    </div>
+                    <span class="strength-text" [style.color]="strengthColor">Strength: {{ strengthText }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <!-- Refresh/Rotate Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18"
+                            height="18">
+                            <path
+                                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                        </svg>
+                    </span>
+                    <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+                        formControlName="confirmPassword" placeholder="••••••••">
+                    <span class="input-action-icon" (click)="toggleConfirmPassword()">
+                        <svg *ngIf="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor" width="18" height="18">
+                            <path
+                                d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
+                        </svg>
+                        <svg *ngIf="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="currentColor" width="18" height="18">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-1.34-3-3-1.34-3-3-1.34-3-3-3z" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="isLoading">
+                {{ isLoading ? 'Creating...' : 'Create Account' }}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                </svg>
+            </button>
+
+            <div class="login-link">
+                Already have an account? <a routerLink="/login">Log In</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="popup-overlay" *ngIf="successPopup">
+        <div class="popup-content success">
+            <div class="popup-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+            </div>
+            <h3>Registration Successful!</h3>
+            <p>Please check your mail to confirm your signup.</p>
+            <div class="popup-actions">
+                <button (click)="openMailApp()" class="popup-btn">Open Mail App</button>
+                <!-- <button (click)="navigateToLogin()" class="popup-btn secondary"
+                    style="background: transparent; border: 1px solid currentColor;">Go to Login</button> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Popup -->
+    <div class="popup-overlay" *ngIf="errorPopup">
+        <div class="popup-content error">
+            <div class="popup-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                </svg>
+            </div>
+            <h3>Registration Failed</h3>
+            <h3>Registration Failed</h3>
+            <p>{{ errorMessage }}</p>
+            <button (click)="closeErrorPopup()" class="popup-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Mismatch Popup -->
+    <div class="popup-overlay" *ngIf="mismatchPopup">
+        <div class="popup-content error">
+            <div class="popup-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                </svg>
+            </div>
+            <h3>Password Mismatch</h3>
+            <p>The passwords entered do not match. Please try again.</p>
+            <button (click)="closeMismatchPopup()" class="popup-btn">Retry</button>
+        </div>
+    </div>
+</div>
