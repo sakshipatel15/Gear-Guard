@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { EquipmentService } from '../../core/services/equipment.service';
 import { ReferenceDataService } from '../../core/services/reference-data.service';
 
+
 @Component({
     selector: 'app-equipment-form',
     standalone: true,
