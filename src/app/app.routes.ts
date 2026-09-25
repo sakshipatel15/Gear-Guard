@@ -5,7 +5,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { AccessDeniedComponent } from './shared/components/access-denied/access-denied.component';
 import { CommandDashboardComponent } from './dashboard/command-dashboard/command-dashboard.component';
-import { authGuard } from './core/guards/auth.guard';
+// auth guard removed for portfolio/demo builds
 
 import { ActivityFeedComponent } from './dashboard/activity-feed/activity-feed.component';
 import { NextActionPanelComponent } from './dashboard/next-action-panel/next-action-panel.component';
@@ -18,7 +18,7 @@ import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 export const routes: Routes = [
     // Auth Routes
     {
-        path: '',
+        path: 'auth',
         component: AuthLayoutComponent,
         children: [
             { path: 'login', component: LoginComponent },
@@ -34,8 +34,8 @@ export const routes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        canActivate: [authGuard],
         children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: CommandDashboardComponent },
             { path: 'dashboard', redirectTo: 'home', pathMatch: 'full' },
             { path: 'activity-feed', component: ActivityFeedComponent },
@@ -90,5 +90,5 @@ export const routes: Routes = [
     },
 
     // Fallback
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'home' }
 ];
